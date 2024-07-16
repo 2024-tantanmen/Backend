@@ -13,6 +13,13 @@ java {
 	}
 }
 
+// build 이름 변경, plane 파일 생성 X
+jar {
+	archiveBaseName = 'carbofootprint'
+	version = '0.0.1-SNAPSHOT'
+	enabled = false
+}
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor

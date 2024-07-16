@@ -2,9 +2,9 @@ name: Carbo-Footprint Dev CI/CD
 
 on:
   push:
-    branches: [ "ci/#1-cicd" ]
+    branches: [ "dev" ]
   pull_request:
-    branches: [ "ci/#1-cicd" ]
+    branches: [ "dev" ]
   workflow_dispatch:
 
 

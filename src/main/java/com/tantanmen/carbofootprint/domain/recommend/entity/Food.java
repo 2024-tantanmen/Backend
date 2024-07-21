@@ -33,6 +33,9 @@ public class Food {
 	@Column(name = "food_name", nullable = false)
 	private String foodName;
 
+	@Column(name = "food_image_url")
+	private String imageUrl;
+
 	@OneToMany(mappedBy = "food", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<FoodAllergen> foodAllergenList;
 

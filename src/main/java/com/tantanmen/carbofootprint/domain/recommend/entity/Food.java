@@ -36,6 +36,15 @@ public class Food {
 	@Column(name = "food_image_url")
 	private String imageUrl;
 
+	@Column(name = "calorie", nullable = false)
+	private Integer calorie;
+
+	@Column(name = "carbohydrate", nullable = false)
+	private Integer carbohydrate;
+
+	@Column(name = "saccharide", nullable = false)
+	private Integer saccharide;
+
 	@OneToMany(mappedBy = "food", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<FoodAllergen> foodAllergenList;
 

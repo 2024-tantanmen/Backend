@@ -29,7 +29,9 @@ public class RecommendResponseDto {
 	public static class RecommendFoodDetailDto{
 		private String name;
 		private String image_url;
-		// TODO 열량, 탄수화물, 당류 및 카테고리 추가
+		private Integer calorie;
+		private Integer carbohydrate;
+		private Integer saccharide;
 	}
 
 

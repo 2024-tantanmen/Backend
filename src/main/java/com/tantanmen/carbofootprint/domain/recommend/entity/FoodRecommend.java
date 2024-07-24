@@ -23,8 +23,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "foods")
-public class Food {
+@Table(name = "food_recommend")
+public class FoodRecommend {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -45,20 +45,20 @@ public class Food {
 	@Column(name = "saccharide", nullable = false)
 	private Integer saccharide;
 
-	@OneToMany(mappedBy = "food", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "foodRecommend", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<FoodAllergen> foodAllergenList;
 
-	@OneToMany(mappedBy = "food", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "foodRecommend", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<FoodPreference> foodPreferenceList;
 
 	// 연관관계 편의 메서드
 	public void addFoodAllergen(FoodAllergen foodAllergen) {
-		foodAllergen.changeFood(this);
+		foodAllergen.changeFoodRecommend(this);
 		foodAllergenList.add(foodAllergen);
 	}
 
 	public void addFoodPreference(FoodPreference foodPreference) {
-		foodPreference.changeFood(this);
+		foodPreference.changeFoodRecommend(this);
 		foodPreferenceList.add(foodPreference);
 	}
 }

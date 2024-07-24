@@ -1,6 +1,6 @@
 package com.tantanmen.carbofootprint.domain.recommend.entity.mapping;
 
-import com.tantanmen.carbofootprint.domain.recommend.entity.Food;
+import com.tantanmen.carbofootprint.domain.recommend.entity.FoodRecommend;
 import com.tantanmen.carbofootprint.domain.recommend.entity.Preference;
 
 import jakarta.persistence.Column;
@@ -31,15 +31,15 @@ public class FoodPreference {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "food_id")
-	private Food food;
+	private FoodRecommend foodRecommend;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "preference_id")
 	private Preference preference;
 
 	// 연관 관계 편의 메서드
-	public void changeFood(Food food){
-		this.food = food;
+	public void changeFoodRecommend(FoodRecommend foodRecommend){
+		this.foodRecommend = foodRecommend;
 	}
 
 	public void changePreference(Preference preference){

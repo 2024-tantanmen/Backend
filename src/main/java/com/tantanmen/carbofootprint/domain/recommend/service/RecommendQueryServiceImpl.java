@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tantanmen.carbofootprint.domain.recommend.entity.Food;
+import com.tantanmen.carbofootprint.domain.recommend.entity.FoodRecommend;
 import com.tantanmen.carbofootprint.domain.recommend.entity.Preference;
 import com.tantanmen.carbofootprint.domain.recommend.enums.PreferenceType;
 import com.tantanmen.carbofootprint.domain.recommend.exception.AllergenEmptyException;
@@ -31,7 +31,7 @@ public class RecommendQueryServiceImpl implements RecommendQueryService {
 	private final PreferenceRepository preferenceRepository;
 
 	@Override
-	public List<Food> recommendFoods(RecommendRequestDto.RecommendFoodRequestDto request){
+	public List<FoodRecommend> recommendFoods(RecommendRequestDto.RecommendFoodRequestDto request){
 		// 선택된 알레르기가 없는 경우
 		if(request.getAllergen_list().isEmpty()){
 			throw new AllergenEmptyException();

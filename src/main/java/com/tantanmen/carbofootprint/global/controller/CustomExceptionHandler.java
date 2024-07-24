@@ -1,4 +1,3 @@
-
 package com.tantanmen.carbofootprint.global.controller;
 
 import com.tantanmen.carbofootprint.global.entity.response.CustomApiResponse;

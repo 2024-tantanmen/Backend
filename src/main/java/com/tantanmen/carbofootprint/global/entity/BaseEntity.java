@@ -1,4 +1,3 @@
-
 package com.tantanmen.carbofootprint.global.entity;
 
 import jakarta.persistence.EntityListeners;

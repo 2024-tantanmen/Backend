@@ -6,10 +6,10 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@EnableJpaAuditing
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableCaching
+@EnableJpaAuditing
 public class CarboFootprintApplication {
 
 	public static void main(String[] args) {

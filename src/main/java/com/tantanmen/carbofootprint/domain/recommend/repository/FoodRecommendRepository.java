@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.tantanmen.carbofootprint.domain.recommend.entity.FoodRecommend;
 
 @Repository
-public interface FoodRepository extends JpaRepository<FoodRecommend, Long> {
+public interface FoodRecommendRepository extends JpaRepository<FoodRecommend, Long> {
 	@Query("SELECT DISTINCT f FROM FoodRecommend f " +
 		"LEFT JOIN f.foodAllergenList fa " +
 		"LEFT JOIN fa.allergen a " +

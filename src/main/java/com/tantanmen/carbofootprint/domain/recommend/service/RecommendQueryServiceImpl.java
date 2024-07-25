@@ -11,7 +11,7 @@ import com.tantanmen.carbofootprint.domain.recommend.entity.Preference;
 import com.tantanmen.carbofootprint.domain.recommend.enums.PreferenceType;
 import com.tantanmen.carbofootprint.domain.recommend.exception.AllergenEmptyException;
 import com.tantanmen.carbofootprint.domain.recommend.exception.PreferenceEmptyException;
-import com.tantanmen.carbofootprint.domain.recommend.repository.FoodRepository;
+import com.tantanmen.carbofootprint.domain.recommend.repository.FoodRecommendRepository;
 import com.tantanmen.carbofootprint.domain.recommend.repository.PreferenceRepository;
 import com.tantanmen.carbofootprint.domain.recommend.web.dto.RecommendRequestDto;
 
@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 @Transactional(readOnly = true)
 public class RecommendQueryServiceImpl implements RecommendQueryService {
 
-	private final FoodRepository foodRepository;
+	private final FoodRecommendRepository foodRecommendRepository;
 	private final PreferenceRepository preferenceRepository;
 
 	@Override
@@ -58,6 +58,6 @@ public class RecommendQueryServiceImpl implements RecommendQueryService {
 			preferenceNameList = request.getPreference_list().stream().map(Enum::name).collect(Collectors.toList());
 		}
 
-		return foodRepository.findRecommendedFoods(allergenNameList, preferenceNameList);
+		return foodRecommendRepository.findRecommendedFoods(allergenNameList, preferenceNameList);
 	}
 }

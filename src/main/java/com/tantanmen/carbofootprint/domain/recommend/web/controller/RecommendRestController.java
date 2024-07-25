@@ -14,13 +14,15 @@ import com.tantanmen.carbofootprint.domain.recommend.web.dto.RecommendRequestDto
 import com.tantanmen.carbofootprint.domain.recommend.web.dto.RecommendResponseDto;
 import com.tantanmen.carbofootprint.global.response.ApiResponse;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * 음식 추천 기능 요청 API
- */
-
+@Tag(name = "음식 추천 API", description = "사용자 맞춤 음식 추천 API")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -29,8 +31,48 @@ public class RecommendRestController {
 
 	private final RecommendQueryService recommendQueryService;
 
+	/**
+	 * 음식 추천 기능 요청 API
+	 */
+	@Operation(summary = "음식 추천 요청 API", description = "알레르기, 식습관 별 음식 추천 API 요청")
+	@ApiResponses(value = {
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(
+			responseCode = "COMMON200",
+			description = "요청 성공",
+			content = {
+				@Content(
+					schema = @Schema(
+						implementation = RecommendResponseDto.RecommendFoodResponseDto.class
+					)
+				)
+			}
+		),
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(
+			responseCode = "RECOMMEND4001",
+			description = "선택된 알레르기가 없는 경우",
+			content = {
+				@Content(
+					schema = @Schema(
+						example = "선택된 알레르기가 존재하지 않습니다."
+					)
+				)
+			}
+		),
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(
+			responseCode = "RECOMMEND4002",
+			description = "선택된 식습관이 없는 경우",
+			content = {
+				@Content(
+					schema = @Schema(
+						example = "선택된 식습관이 존재하지 않습니다."
+					)
+				)
+			}
+		)
+	})
 	@PostMapping("recommend")
-	public ApiResponse<RecommendResponseDto.RecommendFoodResponseDto> recommendFoods(@RequestBody RecommendRequestDto.RecommendFoodRequestDto request){
+	public ApiResponse<RecommendResponseDto.RecommendFoodResponseDto> recommendFoods(
+		@RequestBody RecommendRequestDto.RecommendFoodRequestDto request) {
 		log.info(request.toString());
 		List<FoodRecommend> recommendFoodListRecommend = recommendQueryService.recommendFoods(request);
 		RecommendResponseDto.RecommendFoodResponseDto result = RecommendConverter.toRecommendFoodResponseDto(

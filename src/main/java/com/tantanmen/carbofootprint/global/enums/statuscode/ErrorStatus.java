@@ -12,8 +12,11 @@ public enum ErrorStatus implements BaseCode {
 
 	// recommend
 	_ALLERGEN_EMPTY_ERROR(HttpStatus.BAD_REQUEST, "RECOMMEND4001", "선택된 알레르기가 존재하지 않습니다."),
-	_PREFERENCE_EMPTY_ERROR(HttpStatus.BAD_REQUEST, "RECOMMEND4002", "선택된 식습관이 존재하지 않습니다.");
+	_PREFERENCE_EMPTY_ERROR(HttpStatus.BAD_REQUEST, "RECOMMEND4002", "선택된 식습관이 존재하지 않습니다."),
 
+	// classification
+	_CLASSIFICAION_REQUEST_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "CLASSIFICATION5001", "음식 사진 AI 요청 중 오류가 발생했습니다."),
+	_CLASSIFICATION_FAIL(HttpStatus.BAD_REQUEST, "CLASSIFICATION4001", "음식 사진 인식에 실패했습니다.");
 
 	private final HttpStatus httpStatus;
 	private final String code;

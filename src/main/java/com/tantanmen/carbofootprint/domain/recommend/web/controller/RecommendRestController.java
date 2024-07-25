@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tantanmen.carbofootprint.domain.recommend.converter.RecommendConverter;
-import com.tantanmen.carbofootprint.domain.recommend.entity.Food;
+import com.tantanmen.carbofootprint.domain.recommend.entity.FoodRecommend;
 import com.tantanmen.carbofootprint.domain.recommend.service.RecommendQueryService;
 import com.tantanmen.carbofootprint.domain.recommend.web.dto.RecommendRequestDto;
 import com.tantanmen.carbofootprint.domain.recommend.web.dto.RecommendResponseDto;
@@ -32,9 +32,9 @@ public class RecommendRestController {
 	@PostMapping("recommend")
 	public ApiResponse<RecommendResponseDto.RecommendFoodResponseDto> recommendFoods(@RequestBody RecommendRequestDto.RecommendFoodRequestDto request){
 		log.info(request.toString());
-		List<Food> recommendFoodList = recommendQueryService.recommendFoods(request);
+		List<FoodRecommend> recommendFoodListRecommend = recommendQueryService.recommendFoods(request);
 		RecommendResponseDto.RecommendFoodResponseDto result = RecommendConverter.toRecommendFoodResponseDto(
-			recommendFoodList, request.getAllergen_list(), request.getPreference_list());
+			recommendFoodListRecommend, request.getAllergen_list(), request.getPreference_list());
 		return ApiResponse.onSuccess(result);
 	}
 }

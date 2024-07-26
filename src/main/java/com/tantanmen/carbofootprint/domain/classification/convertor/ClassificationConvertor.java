@@ -6,7 +6,7 @@ import com.tantanmen.carbofootprint.domain.classification.web.dto.Classification
 public class ClassificationConvertor {
 
 	// Food Entity => dto convert
-	public static ClassificationResponseDto.FoodClassificationResponseDto toFoodClassificationResponseDto(Food food){
+	public static ClassificationResponseDto.FoodClassificationResponseDto toFoodClassificationResponseDto(Food food) {
 		return ClassificationResponseDto.FoodClassificationResponseDto.builder()
 			.food_code(food.getCode())
 			.name(food.getName())
@@ -15,6 +15,7 @@ public class ClassificationConvertor {
 			.carb(food.getCarbohydrate())
 			.prot(food.getProtein())
 			.fat(food.getFat())
+			.sugar(food.getSugar())
 			.build();
 	}
 

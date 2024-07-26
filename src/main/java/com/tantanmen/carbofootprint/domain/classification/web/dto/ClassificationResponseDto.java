@@ -30,5 +30,7 @@ public class ClassificationResponseDto {
 		private Double prot; // protein
 		@Schema(description = "지방 함량", example = "4.7")
 		private Double fat;
+		@Schema(description = "당류 함량", example = "2.99")
+		private Double sugar;
 	}
 }

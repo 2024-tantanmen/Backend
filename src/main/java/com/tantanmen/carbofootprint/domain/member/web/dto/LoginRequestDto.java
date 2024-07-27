@@ -1,4 +1,4 @@
-package com.tantanmen.carbofootprint.domain.user.web.dto;
+package com.tantanmen.carbofootprint.domain.member.web.dto;
 
 import lombok.Data;
 

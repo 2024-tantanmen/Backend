@@ -1,13 +1,16 @@
 package com.tantanmen.carbofootprint.domain.member.repository;
 
-import java.util.Optional;
-
+import com.tantanmen.carbofootprint.domain.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.tantanmen.carbofootprint.domain.member.entity.Member;
+import java.util.Optional;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
+
+    boolean existsByLoginId(String loginId);
+    boolean existsByPassword(String password);
+    Optional<Member> findByLoginId(String loginId);
 	Optional<Member> findById(Long memberId);
 }

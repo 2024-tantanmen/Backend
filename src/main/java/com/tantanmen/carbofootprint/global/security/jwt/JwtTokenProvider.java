@@ -1,6 +1,6 @@
 package com.tantanmen.carbofootprint.global.security.jwt;
 
-import com.tantanmen.carbofootprint.domain.user.entity.Authority;
+import com.tantanmen.carbofootprint.domain.member.entity.Authority;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;

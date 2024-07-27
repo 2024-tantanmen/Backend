@@ -1,7 +1,7 @@
 package com.tantanmen.carbofootprint.global.security.service;
 
-import com.tantanmen.carbofootprint.domain.user.entity.Member;
-import com.tantanmen.carbofootprint.domain.user.repository.MemberRepository;
+import com.tantanmen.carbofootprint.domain.member.entity.Member;
+import com.tantanmen.carbofootprint.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

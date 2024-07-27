@@ -1,13 +1,13 @@
-package com.tantanmen.carbofootprint.domain.user.service;
+package com.tantanmen.carbofootprint.domain.member.service;
 
-import com.tantanmen.carbofootprint.domain.user.entity.Authority;
-import com.tantanmen.carbofootprint.domain.user.entity.Member;
-import com.tantanmen.carbofootprint.domain.user.enums.MemberRoles;
-import com.tantanmen.carbofootprint.domain.user.repository.MemberRepository;
-import com.tantanmen.carbofootprint.domain.user.web.dto.LoginRequestDto;
-import com.tantanmen.carbofootprint.domain.user.web.dto.LoginResponseDto;
-import com.tantanmen.carbofootprint.domain.user.web.dto.SignUpResponseDto;
-import com.tantanmen.carbofootprint.domain.user.web.dto.SignUpRequestDto;
+import com.tantanmen.carbofootprint.domain.member.entity.Authority;
+import com.tantanmen.carbofootprint.domain.member.entity.Member;
+import com.tantanmen.carbofootprint.domain.member.enums.MemberRoles;
+import com.tantanmen.carbofootprint.domain.member.repository.MemberRepository;
+import com.tantanmen.carbofootprint.domain.member.web.dto.LoginRequestDto;
+import com.tantanmen.carbofootprint.domain.member.web.dto.LoginResponseDto;
+import com.tantanmen.carbofootprint.domain.member.web.dto.SignUpResponseDto;
+import com.tantanmen.carbofootprint.domain.member.web.dto.SignUpRequestDto;
 import com.tantanmen.carbofootprint.global.entity.response.CustomApiResponse;
 import com.tantanmen.carbofootprint.global.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;

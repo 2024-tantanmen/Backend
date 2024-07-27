@@ -15,22 +15,22 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class User extends BaseEntity {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long memberId;
 
     private String loginId;
 
     private String password;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Role> roles = new ArrayList<>();
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Authority> authorities = new ArrayList<>();
 
-    public void addRole(Role role) {
-        roles.add(role);
-        role.setUser(this);
+    public void addRole(Authority authority) {
+        authorities.add(authority);
+        authority.setMember(this);
     }
 
 }

@@ -1,5 +1,5 @@
 package com.tantanmen.carbofootprint.domain.user.enums;
 
-public enum UserRoles {
+public enum MemberRoles {
     ADMIN, CLIENT
 }

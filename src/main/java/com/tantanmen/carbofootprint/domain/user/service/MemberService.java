@@ -7,7 +7,7 @@ import com.tantanmen.carbofootprint.domain.user.web.dto.SignUpResponseDto;
 import com.tantanmen.carbofootprint.global.entity.response.CustomApiResponse;
 import org.springframework.http.ResponseEntity;
 
-public interface UserService {
+public interface MemberService {
     ResponseEntity<CustomApiResponse<SignUpResponseDto>> signUp(SignUpRequestDto.Request request);
     ResponseEntity<CustomApiResponse<LoginResponseDto>> login(LoginRequestDto.Request request);
 }

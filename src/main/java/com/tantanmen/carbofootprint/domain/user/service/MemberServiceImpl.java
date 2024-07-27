@@ -1,9 +1,9 @@
 package com.tantanmen.carbofootprint.domain.user.service;
 
-import com.tantanmen.carbofootprint.domain.user.entity.Role;
-import com.tantanmen.carbofootprint.domain.user.entity.User;
-import com.tantanmen.carbofootprint.domain.user.enums.UserRoles;
-import com.tantanmen.carbofootprint.domain.user.repository.UserRepository;
+import com.tantanmen.carbofootprint.domain.user.entity.Authority;
+import com.tantanmen.carbofootprint.domain.user.entity.Member;
+import com.tantanmen.carbofootprint.domain.user.enums.MemberRoles;
+import com.tantanmen.carbofootprint.domain.user.repository.MemberRepository;
 import com.tantanmen.carbofootprint.domain.user.web.dto.LoginRequestDto;
 import com.tantanmen.carbofootprint.domain.user.web.dto.LoginResponseDto;
 import com.tantanmen.carbofootprint.domain.user.web.dto.SignUpResponseDto;
@@ -25,9 +25,9 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class MemberServiceImpl implements MemberService {
 
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
@@ -38,31 +38,31 @@ public class UserServiceImpl implements UserService {
         log.info("SignUp loginId : {}", request.getLoginId());
         log.info("SignUp password : {}", request.getPassword());
 
-        if(userRepository.existsByLoginId(request.getLoginId())) {
+        if(memberRepository.existsByLoginId(request.getLoginId())) {
             CustomApiResponse<SignUpResponseDto> existsLoginId = CustomApiResponse.createFailWithoutData(HttpStatus.METHOD_NOT_ALLOWED.value(), "이미 존재하는 아이디 입니다.");
 
             return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(existsLoginId);
         }
 
-        User user = User.builder()
+        Member member = Member.builder()
                 .loginId(request.getLoginId())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .roles(new ArrayList<>())
+                .authorities(new ArrayList<>())
                 .build();
 
-        Role role = Role.builder()
-                .role(UserRoles.ADMIN)
+        Authority authority = Authority.builder()
+                .authorityType(MemberRoles.ADMIN)
                 .build();
 
-        user.addRole(role);
+        member.addRole(authority);
 
-        userRepository.save(user);
+        memberRepository.save(member);
 
-        List<Role> roles = user.getRoles().stream()
+        List<Authority> authorities = member.getAuthorities().stream()
                 .map(Function.identity())
                 .collect(Collectors.toList());
 
-        String token = jwtTokenProvider.createToken(user.getLoginId(), roles);
+        String token = jwtTokenProvider.createToken(member.getLoginId(), authorities);
 
         SignUpResponseDto responseDto = SignUpResponseDto.builder()
                 .token(token)
@@ -80,25 +80,25 @@ public class UserServiceImpl implements UserService {
         log.info("Login loginId : {}", request.getLoginId());
         log.info("Login password : {}", request.getPassword());
 
-        if(!userRepository.existsByLoginId(request.getLoginId())) {
+        if(!memberRepository.existsByLoginId(request.getLoginId())) {
             CustomApiResponse<LoginResponseDto> loginIdError = CustomApiResponse.createFailWithoutData(HttpStatus.METHOD_NOT_ALLOWED.value(), "잘못된 아이디입니다.");
 
             return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(loginIdError);
         }
 
-        User user = userRepository.findByLoginId(request.getLoginId()).orElseThrow(RuntimeException::new);
+        Member member = memberRepository.findByLoginId(request.getLoginId()).orElseThrow(RuntimeException::new);
 
-        if(!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+        if(!passwordEncoder.matches(request.getPassword(), member.getPassword())) {
             CustomApiResponse<LoginResponseDto> passwordError = CustomApiResponse.createFailWithoutData(HttpStatus.METHOD_NOT_ALLOWED.value(), "잘못된 비밀번호입니다.");
 
             return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(passwordError);
         }
 
-        List<Role> roles = user.getRoles().stream()
+        List<Authority> authorities = member.getAuthorities().stream()
                 .map(Function.identity())
                 .collect(Collectors.toList());
 
-        String token = jwtTokenProvider.createToken(user.getLoginId(), roles);
+        String token = jwtTokenProvider.createToken(member.getLoginId(), authorities);
 
         LoginResponseDto responseDto = LoginResponseDto.builder()
                 .token(token)

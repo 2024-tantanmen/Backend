@@ -1,7 +1,7 @@
 package com.tantanmen.carbofootprint.domain.user.web.controller;
 
-import com.tantanmen.carbofootprint.domain.user.repository.UserRepository;
-import com.tantanmen.carbofootprint.domain.user.service.UserService;
+import com.tantanmen.carbofootprint.domain.user.repository.MemberRepository;
+import com.tantanmen.carbofootprint.domain.user.service.MemberService;
 import com.tantanmen.carbofootprint.domain.user.web.dto.LoginRequestDto;
 import com.tantanmen.carbofootprint.domain.user.web.dto.LoginResponseDto;
 import com.tantanmen.carbofootprint.domain.user.web.dto.SignUpResponseDto;
@@ -16,16 +16,16 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-public class UserController {
+public class MemberController {
 
-    private final UserService userService;
-    private final UserRepository userRepository;
+    private final MemberService memberService;
+    private final MemberRepository memberRepository;
 
     // SignUp
     @PostMapping("/signUp")
     public ResponseEntity<CustomApiResponse<SignUpResponseDto>> signUp(@Valid @RequestBody SignUpRequestDto.Request request) {
 
-        ResponseEntity<CustomApiResponse<SignUpResponseDto>> response = userService.signUp(request);
+        ResponseEntity<CustomApiResponse<SignUpResponseDto>> response = memberService.signUp(request);
 
         return response;
     }
@@ -34,7 +34,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<CustomApiResponse<LoginResponseDto>> login(@RequestBody LoginRequestDto.Request request){
 
-        ResponseEntity<CustomApiResponse<LoginResponseDto>> response = userService.login(request);
+        ResponseEntity<CustomApiResponse<LoginResponseDto>> response = memberService.login(request);
 
         return response;
     }

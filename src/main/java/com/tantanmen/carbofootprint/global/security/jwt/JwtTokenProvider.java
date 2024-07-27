@@ -1,7 +1,6 @@
 package com.tantanmen.carbofootprint.global.security.jwt;
 
-import com.tantanmen.carbofootprint.domain.user.entity.Role;
-import com.tantanmen.carbofootprint.domain.user.enums.UserRoles;
+import com.tantanmen.carbofootprint.domain.user.entity.Authority;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -43,10 +42,10 @@ public class JwtTokenProvider {
         key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
-    public String createToken(String username, List<Role> roles) {
+    public String createToken(String username, List<Authority> authorities) {
         Claims claims = Jwts.claims().setSubject(username);
-        claims.put("auth", roles.stream()
-                .map(role -> role.getRole().name())
+        claims.put("auth", authorities.stream()
+                .map(authority -> authority.getAuthorityType().name())
                 .collect(Collectors.toList())
         );
 

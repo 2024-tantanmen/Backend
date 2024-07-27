@@ -1,7 +1,7 @@
 package com.tantanmen.carbofootprint.global.security.service;
 
-import com.tantanmen.carbofootprint.domain.user.entity.User;
-import com.tantanmen.carbofootprint.domain.user.repository.UserRepository;
+import com.tantanmen.carbofootprint.domain.user.entity.Member;
+import com.tantanmen.carbofootprint.domain.user.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,18 +16,18 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailService implements UserDetailsService {
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
 
     @Override
     public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
-        User user = userRepository.findByLoginId(loginId).orElseThrow(RuntimeException::new);
+        Member member = memberRepository.findByLoginId(loginId).orElseThrow(RuntimeException::new);
 
-        List<GrantedAuthority> authorities = user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRole().name()))
+        List<GrantedAuthority> authorities = member.getAuthorities().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getAuthorityType().name()))
                 .collect(Collectors.toList());
 
         return new org.springframework.security.core.userdetails.User(
-                user.getLoginId(), user.getPassword(), authorities
+                member.getLoginId(), member.getPassword(), authorities
         );
     }
 }

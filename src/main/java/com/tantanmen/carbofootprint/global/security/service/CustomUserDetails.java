@@ -1,6 +1,6 @@
 package com.tantanmen.carbofootprint.global.security.service;
 
-import com.tantanmen.carbofootprint.domain.user.entity.User;
+import com.tantanmen.carbofootprint.domain.user.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,27 +14,27 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
-    private User user;
+    private Member member;
 
-    public CustomUserDetails(User user) {
-        this.user = user;
+    public CustomUserDetails(Member member) {
+        this.member = member;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRole().name()))
+        return member.getAuthorities().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getAuthorityType().name()))
                 .collect(Collectors.toList());
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return member.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getLoginId();
+        return member.getLoginId();
     }
 
     @Override

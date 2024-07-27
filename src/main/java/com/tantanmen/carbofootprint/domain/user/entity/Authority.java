@@ -1,33 +1,31 @@
 package com.tantanmen.carbofootprint.domain.user.entity;
 
-import com.tantanmen.carbofootprint.domain.user.enums.UserRoles;
+import com.tantanmen.carbofootprint.domain.user.enums.MemberRoles;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Entity
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Role {
+public class Authority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long roleId;
+    private Long authority_id;
 
     @Enumerated(EnumType.STRING)
-    private UserRoles role;
+    private MemberRoles authorityType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setMember(Member member) {
+        this.member = member;
     }
 }

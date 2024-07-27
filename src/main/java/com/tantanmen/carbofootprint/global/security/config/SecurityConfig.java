@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/login","/signUp").permitAll()
-                        .requestMatchers("/api/**").hasAnyRole("ADMIN")
+                        .requestMatchers("/api/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .logout((logoutConfig) -> logoutConfig.logoutSuccessUrl("/"))

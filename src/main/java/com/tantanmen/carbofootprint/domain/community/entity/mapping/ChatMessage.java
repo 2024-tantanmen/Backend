@@ -1,6 +1,6 @@
 package com.tantanmen.carbofootprint.domain.community.entity.mapping;
 
-import com.tantanmen.carbofootprint.domain.Member.entity.Member;
+import com.tantanmen.carbofootprint.domain.member.entity.Member;
 import com.tantanmen.carbofootprint.domain.community.entity.ChatRoom;
 import com.tantanmen.carbofootprint.domain.community.enums.ChatType;
 import com.tantanmen.carbofootprint.global.entity.BaseEntity;

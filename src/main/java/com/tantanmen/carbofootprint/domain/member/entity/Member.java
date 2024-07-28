@@ -1,4 +1,4 @@
-package com.tantanmen.carbofootprint.domain.Member.entity;
+package com.tantanmen.carbofootprint.domain.member.entity;
 
 import java.util.List;
 

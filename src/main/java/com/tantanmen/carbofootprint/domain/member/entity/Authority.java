@@ -1,6 +1,6 @@
-package com.tantanmen.carbofootprint.domain.Member.entity;
+package com.tantanmen.carbofootprint.domain.member.entity;
 
-import com.tantanmen.carbofootprint.domain.Member.enums.AuthorityType;
+import com.tantanmen.carbofootprint.domain.member.enums.AuthorityType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

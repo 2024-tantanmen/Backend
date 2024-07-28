@@ -4,8 +4,8 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tantanmen.carbofootprint.domain.Member.entity.Member;
-import com.tantanmen.carbofootprint.domain.Member.repository.MemberRepository;
+import com.tantanmen.carbofootprint.domain.member.entity.Member;
+import com.tantanmen.carbofootprint.domain.member.repository.MemberRepository;
 import com.tantanmen.carbofootprint.domain.community.convertor.ChatConvertor;
 import com.tantanmen.carbofootprint.domain.community.entity.ChatRoom;
 import com.tantanmen.carbofootprint.domain.community.entity.mapping.ChatMessage;

@@ -9,7 +9,7 @@ import com.tantanmen.carbofootprint.domain.community.repository.ChatMessageRepos
 
 @Service
 public class ChatMessageListener {
-	@Autowired
+	// @Autowired
 
 
 }

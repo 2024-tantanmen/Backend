@@ -17,22 +17,22 @@ public class ChatController {
 	private SimpMessagingTemplate messagingTemplate;
 	private ChatCommandService chatCommandService;
 
-	@MessageMapping("/chat.sendMessage")
-	@SendTo("/topic/{roomId}")
-	public ChatResponseDto.ChatMessageResponseDto sendMessage(@Payload ChatRequestDto.SendChatRequestDto request) {
-
-
-
-		chatCommandService.saveMessage(chatMessage);
-		ChatResponseDto.ChatMessageResponseDto.builder()
-			.
-		return chatMessage;
-	}
-
-	@MessageMapping("/chat.addUser")
-	@SendTo("/topic/{roomId}")
-	public ChatMessage addUser(@Payload ChatMessage chatMessage) {
-		chatMessage.setContent(chatMessage.getSender() + " joined");
-		return chatMessage;
-	}
+	// @MessageMapping("/chat.sendMessage")
+	// @SendTo("/topic/{roomId}")
+	// public ChatResponseDto.ChatMessageResponseDto sendMessage(@Payload ChatRequestDto.SendChatRequestDto request) {
+	//
+	//
+	//
+	// 	chatCommandService.saveMessage(chatMessage);
+	// 	ChatResponseDto.ChatMessageResponseDto.builder()
+	// 		.
+	// 	return chatMessage;
+	// }
+	//
+	// @MessageMapping("/chat.addUser")
+	// @SendTo("/topic/{roomId}")
+	// public ChatMessage addUser(@Payload ChatMessage chatMessage) {
+	// 	chatMessage.setContent(chatMessage.getSender() + " joined");
+	// 	return chatMessage;
+	// }
 }

@@ -92,9 +92,9 @@ public class ChatCommandServiceImpl implements ChatCommandService {
 	 * 요청 받은 메시지 -> MQ로 전달 후 저장
 	 */
 
-	public ChatMessage sendMessage(ChatRequestDto.SendChatRequestDto request){
-		ChatMessage.builder()
-			.content(request.getContext())
-			.type(ChatType.CHAT)
-	}
+	// public ChatMessage sendMessage(ChatRequestDto.SendChatRequestDto request){
+	// 	ChatMessage.builder()
+	// 		.content(request.getContext())
+	// 		.type(ChatType.CHAT)
+	// }
 }

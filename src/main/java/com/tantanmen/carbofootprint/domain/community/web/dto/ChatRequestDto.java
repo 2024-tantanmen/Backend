@@ -13,7 +13,6 @@ import lombok.ToString;
  * 커뮤니티 관련 요청 DTO
  */
 public class ChatRequestDto {
-	public static Object CreateChatRoomResponseDto;
 
 	/**
 	 * 채팅방 생성 요청 DTO

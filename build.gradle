@@ -40,6 +40,10 @@ dependencies {
 
     // 채팅
     implementation 'org.springframework.boot:spring-boot-starter-websocket' // websocket
+
+    // rabbitMQ
+    implementation 'org.springframework.boot:spring-boot-starter-amqp' // AMQP, RabbitMQ
+
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'

@@ -6,5 +6,5 @@ import lombok.Getter;
 @Getter
 @Builder
 public class SignUpResponseDto {
-    private String token;
+    private Long member_id;
 }

@@ -2,26 +2,21 @@ package com.tantanmen.carbofootprint.domain.member.service;
 
 import com.tantanmen.carbofootprint.domain.member.entity.Authority;
 import com.tantanmen.carbofootprint.domain.member.entity.Member;
-import com.tantanmen.carbofootprint.domain.member.enums.MemberRoles;
+import com.tantanmen.carbofootprint.domain.member.enums.AuthorityType;
+import com.tantanmen.carbofootprint.domain.member.exception.MemberNotExistException;
 import com.tantanmen.carbofootprint.domain.member.repository.MemberRepository;
 import com.tantanmen.carbofootprint.domain.member.web.dto.LoginRequestDto;
-import com.tantanmen.carbofootprint.domain.member.web.dto.LoginResponseDto;
-import com.tantanmen.carbofootprint.domain.member.web.dto.SignUpResponseDto;
 import com.tantanmen.carbofootprint.domain.member.web.dto.SignUpRequestDto;
-import com.tantanmen.carbofootprint.global.entity.response.CustomApiResponse;
+import com.tantanmen.carbofootprint.global.enums.statuscode.ErrorStatus;
+import com.tantanmen.carbofootprint.global.exception.GeneralException;
 import com.tantanmen.carbofootprint.global.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -33,81 +28,56 @@ public class MemberServiceImpl implements MemberService {
 
     // SignUp
     @Override
-    public ResponseEntity<CustomApiResponse<SignUpResponseDto>> signUp(SignUpRequestDto.Request request) {
+    public Member signUp(SignUpRequestDto.Request request) {
 
         log.info("SignUp loginId : {}", request.getLoginId());
         log.info("SignUp password : {}", request.getPassword());
 
+        // 이미 존재하는 Login Id인 경우 예외
         if(memberRepository.existsByLoginId(request.getLoginId())) {
-            CustomApiResponse<SignUpResponseDto> existsLoginId = CustomApiResponse.createFailWithoutData(HttpStatus.METHOD_NOT_ALLOWED.value(), "이미 존재하는 아이디 입니다.");
-
-            return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(existsLoginId);
+            throw new GeneralException(ErrorStatus._EXIST_LOGIN_ID);
         }
 
         Member member = Member.builder()
                 .loginId(request.getLoginId())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .authorities(new ArrayList<>())
+                // TODO 사용자 닉네임 임시적으로 login id로 적용
+                .username(request.getLoginId())
+                .authorityList(new ArrayList<>())
                 .build();
 
         Authority authority = Authority.builder()
-                .authorityType(MemberRoles.ADMIN)
+                .type(AuthorityType.ROLE_MEMBER)
                 .build();
 
-        member.addRole(authority);
+        member.addAuthority(authority);
 
         memberRepository.save(member);
 
-        List<Authority> authorities = member.getAuthorities().stream()
-                .map(Function.identity())
-                .collect(Collectors.toList());
-
-        String token = jwtTokenProvider.createToken(member.getLoginId(), authorities);
-
-        SignUpResponseDto responseDto = SignUpResponseDto.builder()
-                .token(token)
-                .build();
-
-        CustomApiResponse<SignUpResponseDto> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), responseDto, "회원가입에 성공하였습니다.");
-
-        return ResponseEntity.ok(response);
+        return member;
     }
 
     // Login
     @Override
-    public ResponseEntity<CustomApiResponse<LoginResponseDto>> login(LoginRequestDto.Request request) {
+    public String login(LoginRequestDto.Request request) {
 
         log.info("Login loginId : {}", request.getLoginId());
         log.info("Login password : {}", request.getPassword());
 
-        if(!memberRepository.existsByLoginId(request.getLoginId())) {
-            CustomApiResponse<LoginResponseDto> loginIdError = CustomApiResponse.createFailWithoutData(HttpStatus.METHOD_NOT_ALLOWED.value(), "잘못된 아이디입니다.");
+        // LoginId에 맞는 사용자가 존재하지 않는 경우
+        Member member = memberRepository.findByLoginId(request.getLoginId()).orElseThrow(() -> new MemberNotExistException());
 
-            return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(loginIdError);
-        }
-
-        Member member = memberRepository.findByLoginId(request.getLoginId()).orElseThrow(RuntimeException::new);
-
+        // 비밀번호가 올바르지 않은 경우
         if(!passwordEncoder.matches(request.getPassword(), member.getPassword())) {
-            CustomApiResponse<LoginResponseDto> passwordError = CustomApiResponse.createFailWithoutData(HttpStatus.METHOD_NOT_ALLOWED.value(), "잘못된 비밀번호입니다.");
-
-            return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(passwordError);
+            throw new GeneralException(ErrorStatus._INVALID_LOGINID_OR_PASSWORD);
         }
 
-        List<Authority> authorities = member.getAuthorities().stream()
-                .map(Function.identity())
-                .collect(Collectors.toList());
+        List<Authority> authorities = member.getAuthorityList();
 
+        // 토큰 생성
         String token = jwtTokenProvider.createToken(member.getLoginId(), authorities);
 
-        LoginResponseDto responseDto = LoginResponseDto.builder()
-                .token(token)
-                .build();
-
-
-        CustomApiResponse<LoginResponseDto> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), responseDto, "로그인에 성공하였습니다.");
-
-        return ResponseEntity.ok(response);
+        return token;
     }
 
 

@@ -3,7 +3,8 @@ package com.tantanmen.carbofootprint.domain.chatbot.web.controller;
 import com.tantanmen.carbofootprint.domain.chatbot.service.ChatbotService;
 import com.tantanmen.carbofootprint.domain.chatbot.web.dto.ChatbotRequestDto;
 import com.tantanmen.carbofootprint.domain.chatbot.web.dto.ChatbotResponseDto;
-import com.tantanmen.carbofootprint.global.entity.response.CustomApiResponse;
+import com.tantanmen.carbofootprint.global.response.ApiResponse;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -22,13 +23,15 @@ public class ChatbotController {
 
     // chatbot get question from user
     @PostMapping("")
-    public ResponseEntity<CustomApiResponse<ChatbotResponseDto.Response>> InitialChatbot(@RequestBody ChatbotRequestDto.Request request) throws Exception {
-
-        log.info("=== This is Controller ===");
+    public ApiResponse<ChatbotResponseDto.Response> initialChatbot(@RequestBody ChatbotRequestDto.Request request) throws Exception {
         log.info("question : {}", request.getQuestion());
         log.info("isRecommend : {}", request.isRecommend());
-        ResponseEntity<CustomApiResponse<ChatbotResponseDto.Response>> response = chatbotService.getResponse(request);
+        String response = chatbotService.getResponse(request);
 
-        return response;
+        ChatbotResponseDto.Response result = ChatbotResponseDto.Response.builder()
+            .answer(response)
+            .build();
+
+        return ApiResponse.onSuccess(result);
     }
 }

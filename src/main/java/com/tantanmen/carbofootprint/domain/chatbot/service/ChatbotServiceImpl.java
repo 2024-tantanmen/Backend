@@ -3,12 +3,8 @@ package com.tantanmen.carbofootprint.domain.chatbot.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tantanmen.carbofootprint.domain.chatbot.web.dto.ChatbotRequestDto;
-import com.tantanmen.carbofootprint.domain.chatbot.web.dto.ChatbotResponseDto;
-import com.tantanmen.carbofootprint.global.entity.response.CustomApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -25,7 +21,7 @@ public class ChatbotServiceImpl implements ChatbotService {
     private String model;
 
     @Override
-    public ResponseEntity<CustomApiResponse<ChatbotResponseDto.Response>> getResponse(ChatbotRequestDto.Request request) throws Exception {
+    public String getResponse(ChatbotRequestDto.Request request) throws Exception {
         String prompt = "";
         String getAnswer = "";
 
@@ -75,13 +71,7 @@ public class ChatbotServiceImpl implements ChatbotService {
             throw new Exception("Chatbot Error!");
         }
 
-        ChatbotResponseDto.Response answer = ChatbotResponseDto.Response.builder()
-                .answer(getAnswer)
-                .build();
-
-        CustomApiResponse<ChatbotResponseDto.Response> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), answer, "챗봇 답변 생성이 완료되었습니다.");
-
-        return ResponseEntity.ok(response);
+        return getAnswer;
     }
 
     @Override

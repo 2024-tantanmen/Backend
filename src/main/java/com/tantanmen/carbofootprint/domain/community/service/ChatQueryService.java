@@ -8,5 +8,5 @@ import com.tantanmen.carbofootprint.domain.community.entity.mapping.ChatMessage;
 public interface ChatQueryService {
 	List<ChatRoom> getAllChatRooms();
 
-	List<ChatMessage> getRoomChatMessages(Long memberId);
+	List<ChatMessage> getRoomChatMessages(Long roomId, Long memberId);
 }

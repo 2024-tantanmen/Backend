@@ -75,7 +75,7 @@ public class ChatRestController {
 		Long memberId = 1L;
 
 		// TODO 임시유저 => JWT 로그인 유저로 변경하기
-		List<ChatMessage> chatMessageList = chatQueryService.getRoomChatMessages(memberId);
+		List<ChatMessage> chatMessageList = chatQueryService.getRoomChatMessages(roomId, memberId);
 		List<ChatResponseDto.ChatMessageResponseDto> result = ChatConvertor.toChatMessageResponseDtoList(
 			chatMessageList, memberId);
 		return ApiResponse.onSuccess(result);

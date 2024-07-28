@@ -17,6 +17,6 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
 	 * 사용자 입장 이후의 채팅 목록 조회
 	 */
 
-	List<ChatMessage> findAllByChatRoomIdAndIdGreaterThanEqualOrderByIdAsc(Long enterChatId);
+	List<ChatMessage> findAllByChatRoomIdAndIdGreaterThanEqualOrderByIdAsc(Long chatRoomId, Long enterChatId);
 
 }

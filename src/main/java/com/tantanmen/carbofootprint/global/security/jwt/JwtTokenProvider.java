@@ -42,10 +42,13 @@ public class JwtTokenProvider {
         key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
+    /**
+     * 토큰 생성
+     */
     public String createToken(String username, List<Authority> authorities) {
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("auth", authorities.stream()
-                .map(authority -> authority.getAuthorityType().name())
+                .map(authority -> authority.getType().name())
                 .collect(Collectors.toList())
         );
 
@@ -60,12 +63,18 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    /**
+     * 검증 키
+     */
     private Key getSignKey(String secretKey) {
 
         byte[] keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
+    /**
+     * SecurityContext에 데이터 추가
+     */
     public void setSecurityContext(String token) {
         Claims claims = getClaimsFromToken(token);
         List<String> roles = claims.get("auth", List.class);
@@ -82,6 +91,10 @@ public class JwtTokenProvider {
         return Jwts.parserBuilder().setSigningKey(getSignKey(secretKey)).build().parseClaimsJws(token).getBody();
     }
 
+    /**
+     * Authorization 헤더에서 토큰 key 값 추출
+     */
+
     public String resolveToken(HttpServletRequest request) {
 
         String bearerToken = request.getHeader("Authorization");
@@ -92,6 +105,9 @@ public class JwtTokenProvider {
         return null;
     }
 
+    /**
+     * 토큰 검증
+     */
     public boolean validateToken(String token) {
         try{
             Jwts.parserBuilder().setSigningKey(getSignKey(secretKey)).build().parseClaimsJws(token);

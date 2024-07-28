@@ -48,7 +48,7 @@ public class Member {
 	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<MemberChatRoom> memberChatRoomList;
 
-	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ChatMessage> chatMessageList;
 
 	// 연관 관계 편의 메서드

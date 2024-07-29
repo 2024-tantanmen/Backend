@@ -59,4 +59,12 @@ public class ChatRoom extends BaseEntity {
 		memberChatRoom.changeChatRoom(this);
 		memberChatRoomList.add(memberChatRoom);
 	}
+
+	public void increaseCurrentCapacity(){
+		currentCapacity ++;
+	}
+
+	public void decreaseCurrentCapacity(){
+		currentCapacity --;
+	}
 }

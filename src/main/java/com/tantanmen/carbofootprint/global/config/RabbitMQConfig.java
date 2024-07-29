@@ -14,4 +14,12 @@ public class RabbitMQConfig {
 	public Queue chatQueue() {
 		return new Queue("chatQueue");
 	}
+
+	/**
+	 * 연결 종료 시 사용자가 확인한 마지막 채팅 저장 용 MQ
+	 */
+	@Bean
+	public Queue lastChatQueue() {
+		return new Queue("lastChatQueue");
+	}
 }

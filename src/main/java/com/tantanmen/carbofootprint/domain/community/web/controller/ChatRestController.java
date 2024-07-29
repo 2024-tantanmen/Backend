@@ -17,6 +17,8 @@ import com.tantanmen.carbofootprint.domain.community.service.ChatCommandService;
 import com.tantanmen.carbofootprint.domain.community.service.ChatQueryService;
 import com.tantanmen.carbofootprint.domain.community.web.dto.ChatRequestDto;
 import com.tantanmen.carbofootprint.domain.community.web.dto.ChatResponseDto;
+import com.tantanmen.carbofootprint.domain.member.entity.Member;
+import com.tantanmen.carbofootprint.global.annotation.LoginMember;
 import com.tantanmen.carbofootprint.global.response.ApiResponse;
 
 import jakarta.validation.Valid;
@@ -50,19 +52,17 @@ public class ChatRestController {
 
 	/**
 	 * 채팅 방 생성
+	 * 입장은 웹소켓으로 요청
 	 */
 	@PostMapping("/room")
 	public ApiResponse<ChatResponseDto.EnterChatRoomResponseDto> createRoom(@Valid @RequestBody
-	ChatRequestDto.CreateChatRoomRequestDto request) {
-		ChatRoom room = chatCommandService.createRoom(request);
+	ChatRequestDto.CreateChatRoomRequestDto request, @LoginMember Member member) {
+		ChatRoom chatRoom = chatCommandService.createRoom(request, member);
+
 		ChatResponseDto.EnterChatRoomResponseDto result = ChatResponseDto.EnterChatRoomResponseDto.builder()
-			.chat_room_id(room.getId())
+			.chat_room_id(chatRoom.getId())
 			.build();
 
-		// 채팅 방 연결
-		// TODO 사용자 유저 적용
-		Long memberId = 1L;
-		chatCommandService.enterChatRoom(room.getId(), memberId);
 		return ApiResponse.onSuccess(result);
 	}
 
@@ -71,13 +71,10 @@ public class ChatRestController {
 	 */
 	@GetMapping("/rooms/{roomId}/messages")
 	public ApiResponse<List<ChatResponseDto.ChatMessageResponseDto>> getRoomChatMessages(
-		@PathVariable(name = "roomId") Long roomId) {
-		Long memberId = 1L;
-
-		// TODO 임시유저 => JWT 로그인 유저로 변경하기
-		List<ChatMessage> chatMessageList = chatQueryService.getRoomChatMessages(roomId, memberId);
+		@PathVariable(name = "roomId") Long roomId, @LoginMember Member member) {
+		List<ChatMessage> chatMessageList = chatQueryService.getRoomChatMessages(roomId, member.getId());
 		List<ChatResponseDto.ChatMessageResponseDto> result = ChatConvertor.toChatMessageResponseDtoList(
-			chatMessageList, memberId);
+			chatMessageList, member.getId());
 		return ApiResponse.onSuccess(result);
 	}
 }

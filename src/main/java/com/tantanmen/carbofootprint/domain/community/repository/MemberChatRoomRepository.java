@@ -9,5 +9,6 @@ import com.tantanmen.carbofootprint.domain.community.entity.mapping.MemberChatRo
 
 @Repository
 public interface MemberChatRoomRepository extends JpaRepository<MemberChatRoom, Long> {
-	Optional<MemberChatRoom> findByMemberId(Long memberId);
+	Optional<MemberChatRoom> findByMemberIdAndChatRoomId(Long memberId, Long chatRoomId);
+	Optional<MemberChatRoom> findByMemberLoginIdAndChatRoomId(String loginId, Long chatRoomId);
 }

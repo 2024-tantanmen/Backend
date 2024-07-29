@@ -34,12 +34,16 @@ public class ChatQueryServiceImpl implements ChatQueryService {
 		return chatRoomRepository.findAll();
 	}
 
+	/**
+	 * 채팅방의 채팅 메시지 조회
+	 */
 	@Override
 	public List<ChatMessage> getRoomChatMessages(Long roomId, Long memberId) {
-		MemberChatRoom memberChatRoom = memberChatRoomRepository.findByMemberId(memberId)
+		MemberChatRoom memberChatRoom = memberChatRoomRepository.findByMemberIdAndChatRoomId(memberId, roomId)
 			.orElseThrow(() -> new GeneralException(ErrorStatus._CHAT_ROOM_ENTRY_NOT_FOUND));
 		List<ChatMessage> chatMessageList = chatMessageRepository.findAllByChatRoomIdAndIdGreaterThanEqualOrderByIdAsc(roomId,
 			memberChatRoom.getEnterChatId());
 		return chatMessageList;
 	}
+
 }

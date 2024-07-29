@@ -37,7 +37,17 @@ public class ChatRequestDto {
 	@Setter
 	@ToString
 	public static class SendChatRequestDto {
-		private String context;
+		private String content;
+		private Long chat_room_id;
+	}
+
+	/**
+	 * 채팅방 입장 웹 소켓 요청 DTO
+	 */
+	@Getter
+	@Setter
+	@ToString
+	public static class EnterChatRoomRequestDto {
 		private Long chat_room_id;
 	}
 

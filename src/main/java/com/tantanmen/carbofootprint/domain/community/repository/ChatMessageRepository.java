@@ -3,6 +3,8 @@ package com.tantanmen.carbofootprint.domain.community.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.tantanmen.carbofootprint.domain.community.entity.mapping.ChatMessage;
@@ -18,5 +20,11 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
 	 */
 
 	List<ChatMessage> findAllByChatRoomIdAndIdGreaterThanEqualOrderByIdAsc(Long chatRoomId, Long enterChatId);
+
+	/**
+	 * 특정 채팅방의 채팅 개수 조회
+	 */
+	@Query("SELECT COUNT(c) FROM ChatMessage c WHERE c.chatRoom.id = :chatRoomId")
+	Long findChatMessageCountByChatRoomId(@Param("chatRoomId") Long chatRoomId);
 
 }

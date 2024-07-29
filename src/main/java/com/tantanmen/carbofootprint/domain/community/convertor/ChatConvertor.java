@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import com.tantanmen.carbofootprint.domain.community.entity.ChatRoom;
 import com.tantanmen.carbofootprint.domain.community.entity.mapping.ChatMessage;
+import com.tantanmen.carbofootprint.domain.community.enums.ChatType;
 import com.tantanmen.carbofootprint.domain.community.web.dto.ChatRequestDto;
 import com.tantanmen.carbofootprint.domain.community.web.dto.ChatResponseDto;
 
@@ -29,8 +30,9 @@ public class ChatConvertor {
 		return ChatRoom.builder()
 			.name(request.getName())
 			.maxCapacity(request.getMax_capacity())
-			.currentCapacity(0)
+			.currentCapacity(1)
 			.chatMessageList(new ArrayList<>())
+			.memberChatRoomList(new ArrayList<>())
 			.build();
 	}
 
@@ -51,7 +53,7 @@ public class ChatConvertor {
 	 * 채팅 작성자에 따른 type 변경
 	 * 만약 in, out 일 경우 type 변경
 	 */
-	private static ChatResponseDto.ChatMessageResponseDto toChatMessageResponseDto(ChatMessage chatMessage,
+	public static ChatResponseDto.ChatMessageResponseDto toChatMessageResponseDto(ChatMessage chatMessage,
 		Long memberId) {
 		String chatType = "system";
 		switch (chatMessage.getType()) {
@@ -77,6 +79,16 @@ public class ChatConvertor {
 			.date(chatMessage.getCreatedAt().format(DateTimeFormatter.ofPattern("HH:mm")))
 			.chat(chatMessage.getContent())
 			.sender_username(chatMessage.getSender().getUsername())
+			.build();
+	}
+
+	/**
+	 * 채팅 요청 DTO => chatMessage 객체
+	 */
+	public static ChatMessage toChatMessage(ChatRequestDto.SendChatRequestDto request){
+		return ChatMessage.builder()
+			.type(ChatType.CHAT)
+			.content(request.getContent())
 			.build();
 	}
 }

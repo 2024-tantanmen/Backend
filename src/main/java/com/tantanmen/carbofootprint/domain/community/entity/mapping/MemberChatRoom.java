@@ -35,6 +35,9 @@ public class MemberChatRoom {
 	@Column(name = "enter_chat_id", nullable = false)
 	private Long enterChatId;
 
+	@Column(name = "last_chat_id")
+	private Long lastChatId;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")
 	private Member member;
@@ -50,6 +53,10 @@ public class MemberChatRoom {
 
 	public void changeChatRoom(ChatRoom chatRoom) {
 		this.chatRoom = chatRoom;
+	}
+
+	public void changeLastChatId(Long lastChatId){
+		this.lastChatId = lastChatId;
 	}
 
 }

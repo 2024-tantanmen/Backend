@@ -17,6 +17,7 @@ public class ChatConvertor {
 	 */
 	public static ChatResponseDto.ChatRoomPreviewResponseDto toChatRoomPreviewResponseDto(ChatRoom chatRoom) {
 		return ChatResponseDto.ChatRoomPreviewResponseDto.builder()
+			.room_id(chatRoom.getId())
 			.room_name(chatRoom.getName())
 			.room_max_capacity(chatRoom.getMaxCapacity())
 			.room_current_capacity(chatRoom.getCurrentCapacity())

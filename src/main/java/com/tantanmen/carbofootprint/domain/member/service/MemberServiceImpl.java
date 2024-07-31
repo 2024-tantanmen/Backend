@@ -14,7 +14,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 @Service
@@ -59,6 +62,7 @@ public class MemberServiceImpl implements MemberService {
 
     // Login
     @Override
+    @Transactional
     public String login(LoginRequestDto.Request request) {
 
         log.info("Login loginId : {}", request.getLoginId());
@@ -73,6 +77,19 @@ public class MemberServiceImpl implements MemberService {
         }
 
         List<Authority> authorities = member.getAuthorityList();
+
+        // 연속 출석 일수 변경
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+        String now = LocalDateTime.now().format(formatter);
+        String yesterday = LocalDateTime.now().minusDays(1).format(formatter);
+        if(member.getLastLoginDate() == null){
+            member.changeAttendanceStreakCount(1);
+        }else if(!member.getLastLoginDate().equals(yesterday) && !member.getLastLoginDate().equals(now)){
+        }else if(member.getLastLoginDate().equals(yesterday)){
+            member.changeAttendanceStreakCount(member.getAttendanceStreakCount() + 1);
+        }
+
+        memberRepository.save(member);
 
         // 토큰 생성
         String token = jwtTokenProvider.createToken(member.getLoginId(), authorities);

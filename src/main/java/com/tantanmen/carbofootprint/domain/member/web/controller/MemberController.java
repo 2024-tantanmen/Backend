@@ -2,10 +2,12 @@ package com.tantanmen.carbofootprint.domain.member.web.controller;
 
 import com.tantanmen.carbofootprint.domain.member.entity.Member;
 import com.tantanmen.carbofootprint.domain.member.service.MemberService;
+import com.tantanmen.carbofootprint.domain.member.web.dto.AttendanceResponseDto;
 import com.tantanmen.carbofootprint.domain.member.web.dto.LoginRequestDto;
 import com.tantanmen.carbofootprint.domain.member.web.dto.LoginResponseDto;
 import com.tantanmen.carbofootprint.domain.member.web.dto.SignUpResponseDto;
 import com.tantanmen.carbofootprint.domain.member.web.dto.SignUpRequestDto;
+import com.tantanmen.carbofootprint.global.annotation.LoginMember;
 import com.tantanmen.carbofootprint.global.response.ApiResponse;
 
 import jakarta.validation.Valid;
@@ -41,6 +43,15 @@ public class MemberController {
             .token(token)
             .build();
 
+        return ApiResponse.onSuccess(result);
+    }
+
+    //attendance
+    @GetMapping("/attendance")
+    public ApiResponse<AttendanceResponseDto.GetAttendanceResponseDto> getAttendance(@LoginMember Member member){
+        AttendanceResponseDto.GetAttendanceResponseDto result = AttendanceResponseDto.GetAttendanceResponseDto.builder()
+            .attendance_streak_count(member.getAttendanceStreakCount())
+            .build();
         return ApiResponse.onSuccess(result);
     }
 

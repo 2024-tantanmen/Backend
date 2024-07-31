@@ -2,8 +2,10 @@ package com.tantanmen.carbofootprint.domain.community.web.dto;
 
 import org.hibernate.validator.constraints.Length;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +14,7 @@ import lombok.ToString;
 /**
  * 커뮤니티 관련 요청 DTO
  */
+@Schema(title = "COMMUNITY_REQ_01", description = "커뮤니티 관련 요청 DTO")
 public class ChatRequestDto {
 
 	/**
@@ -37,7 +40,11 @@ public class ChatRequestDto {
 	@Setter
 	@ToString
 	public static class SendChatRequestDto {
+		@Schema(description = "채팅 내용", example = "안녕하세요!")
+		@NotNull(message = "채팅 내용을 입력해주세요.")
 		private String content;
+		@Schema(description = "채팅을 전송할 채팅 방 고유 번호", example = "1")
+		@NotNull(message = "채팅을 전송할 채팅방 고유 번호를 입력해주세요.")
 		private Long chat_room_id;
 	}
 
@@ -48,6 +55,8 @@ public class ChatRequestDto {
 	@Setter
 	@ToString
 	public static class EnterChatRoomRequestDto {
+		@Schema(description = "입장할 채팅방의 고유 번호", example = "1")
+		@NotNull(message = "입장할 채팅방의 고유 번호를 입력해주세요.")
 		private Long chat_room_id;
 	}
 

@@ -20,7 +20,7 @@ public class ChatResponseDto {
 	@AllArgsConstructor
 	public static class ChatRoomPreviewResponseDto {
 		// TODO 채팅방 ID 전송 추가하기
-		@Schema(description = "채팅방 이름", example = "탄수화몰 챌린지")
+		@Schema(description = "채팅방 이름", example = "탄수화물 챌린지")
 		private String room_name; // 채팅방 이름
 		@Schema(description = "채팅방 최대 인원 제한", example = "20")
 		private Integer room_max_capacity; // 채팅방 최대 인원 수

@@ -22,6 +22,7 @@ import com.tantanmen.carbofootprint.global.annotation.LoginMember;
 import com.tantanmen.carbofootprint.global.response.ApiResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -89,7 +90,7 @@ public class ChatRestController {
 	})
 	@PostMapping("/room")
 	public ApiResponse<ChatResponseDto.EnterChatRoomResponseDto> createRoom(@Valid @RequestBody
-	ChatRequestDto.CreateChatRoomRequestDto request, @LoginMember Member member) {
+	ChatRequestDto.CreateChatRoomRequestDto request, @Parameter(hidden = true) @LoginMember Member member) {
 		ChatRoom chatRoom = chatCommandService.createRoom(request, member);
 
 		ChatResponseDto.EnterChatRoomResponseDto result = ChatResponseDto.EnterChatRoomResponseDto.builder()
@@ -130,7 +131,7 @@ public class ChatRestController {
 	})
 	@GetMapping("/rooms/{roomId}/messages")
 	public ApiResponse<List<ChatResponseDto.ChatMessageResponseDto>> getRoomChatMessages(
-		@PathVariable(name = "roomId") Long roomId, @LoginMember Member member) {
+		@PathVariable(name = "roomId") Long roomId, @Parameter(hidden = true) @LoginMember Member member) {
 		List<ChatMessage> chatMessageList = chatQueryService.getRoomChatMessages(roomId, member.getId());
 		List<ChatResponseDto.ChatMessageResponseDto> result = ChatConvertor.toChatMessageResponseDtoList(
 			chatMessageList, member.getId());

@@ -40,6 +40,9 @@ public class Schedule extends BaseEntity {
 	@Column(name = "id")
 	private Long id;
 
+	@Column(name = "title")
+	private String title;
+
 	@Column(name = "total_kcal")
 	private Long totalKcal;
 

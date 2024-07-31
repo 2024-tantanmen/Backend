@@ -2,6 +2,7 @@ package com.tantanmen.carbofootprint.domain.schedule.convertor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.tantanmen.carbofootprint.domain.schedule.entity.Schedule;
 import com.tantanmen.carbofootprint.domain.schedule.entity.meal.FirstMeal;
@@ -10,6 +11,7 @@ import com.tantanmen.carbofootprint.domain.schedule.entity.meal.SecondMeal;
 import com.tantanmen.carbofootprint.domain.schedule.entity.meal.ThirdMeal;
 import com.tantanmen.carbofootprint.domain.schedule.enums.FoodType;
 import com.tantanmen.carbofootprint.domain.schedule.web.dto.ScheduleRequestDto;
+import com.tantanmen.carbofootprint.domain.schedule.web.dto.ScheduleResponseDto;
 
 public class ScheduleConvertor {
 	/**
@@ -86,5 +88,44 @@ public class ScheduleConvertor {
 
 			schedule.addOtherMeal(otherMeal);
 		});
+	}
+
+	/**
+	 * List<Schedule> => List<DTO>로 변환
+	 */
+	public static ScheduleResponseDto.FindAllScheduleResponseDto toFindAllScheduleResponseDto(List<Schedule> scheduleList){
+		List<ScheduleResponseDto.SchedulePreviewResponseDto> august_schedule_list = new ArrayList<>();
+		List<ScheduleResponseDto.SchedulePreviewResponseDto> september_schedule_list = new ArrayList<>();
+
+		for (Schedule schedule : scheduleList) {
+			ScheduleResponseDto.SchedulePreviewResponseDto result = toSchedulePreviewResponseDto(
+				schedule);
+			if (schedule.getMonth() == 8){
+				august_schedule_list.add(result);
+			}
+			else september_schedule_list.add(result);
+		}
+
+		return ScheduleResponseDto.FindAllScheduleResponseDto.builder()
+			.august_schedule_list(august_schedule_list)
+			.september_schedule_list(september_schedule_list)
+			.build();
+	}
+
+	/**
+	 * Schedule => DTO로 변환
+	 */
+	private static ScheduleResponseDto.SchedulePreviewResponseDto toSchedulePreviewResponseDto(Schedule schedule){
+		return ScheduleResponseDto.SchedulePreviewResponseDto.builder()
+			.title(schedule.getTitle())
+			.calorie(schedule.getTotalKcal())
+			.workoutTime(schedule.getExerciseDuration())
+			.stepCount(schedule.getStepCount())
+			.firstMeal(schedule.getFirstMealList().stream().map(FirstMeal::getFoodType).collect(Collectors.toList()))
+			.secondMeal(schedule.getSecondMealList().stream().map(SecondMeal::getFoodType).collect(Collectors.toList()))
+			.thirdMeal(schedule.getThirdMealList().stream().map(ThirdMeal::getFoodType).collect(Collectors.toList()))
+			.extraMeal(schedule.getOtherMealList().stream().map(OtherMeal::getFoodType).collect(Collectors.toList()))
+			.day(schedule.getDay())
+			.build();
 	}
 }

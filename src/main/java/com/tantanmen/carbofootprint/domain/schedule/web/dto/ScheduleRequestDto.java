@@ -24,7 +24,7 @@ public class ScheduleRequestDto {
 	public static class AddScheduleRequestDto{
 		@Length(max = 10, message = "일정 이름은 최대 10글자 입니다.")
 		@NotBlank(message = "일정 이름을 작성해주세요.")
-		private String name;
+		private String title;
 		@NotNull(message = "날짜를 입력해주세요.")
 		@Min(value = 8, message = "8월 이상의 데이터만 요청 가능합니다.")
 		@Max(value = 9, message = "최대 9월까지의 데이터만 요청 가능합니다.")

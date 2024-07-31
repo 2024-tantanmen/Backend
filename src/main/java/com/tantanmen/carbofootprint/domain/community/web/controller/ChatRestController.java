@@ -62,8 +62,8 @@ public class ChatRestController {
 		)
 	})
 	@GetMapping("/rooms")
-	public ApiResponse<List<ChatResponseDto.ChatRoomPreviewResponseDto>> getAllChatRooms() {
-		List<ChatResponseDto.ChatRoomPreviewResponseDto> result = chatQueryService.getAllChatRooms()
+	public ApiResponse<List<ChatResponseDto.ChatRoomPreviewResponseDto>> getAllChatRooms(@Parameter(hidden = true) @LoginMember Member member) {
+		List<ChatResponseDto.ChatRoomPreviewResponseDto> result = chatQueryService.getAllChatRooms(member)
 			.stream()
 			.map(ChatConvertor::toChatRoomPreviewResponseDto)
 			.collect(Collectors.toList());

@@ -11,6 +11,7 @@ import com.tantanmen.carbofootprint.domain.community.entity.mapping.MemberChatRo
 import com.tantanmen.carbofootprint.domain.community.repository.ChatMessageRepository;
 import com.tantanmen.carbofootprint.domain.community.repository.ChatRoomRepository;
 import com.tantanmen.carbofootprint.domain.community.repository.MemberChatRoomRepository;
+import com.tantanmen.carbofootprint.domain.member.entity.Member;
 import com.tantanmen.carbofootprint.global.enums.statuscode.ErrorStatus;
 import com.tantanmen.carbofootprint.global.exception.GeneralException;
 
@@ -30,8 +31,8 @@ public class ChatQueryServiceImpl implements ChatQueryService {
 	 * 모든 채팅 방 목록 데이터 조회
 	 */
 	@Override
-	public List<ChatRoom> getAllChatRooms() {
-		return chatRoomRepository.findAll();
+	public List<ChatRoom> getAllChatRooms(Member member) {
+		return chatRoomRepository.findAllByMemberNotExist(member.getId());
 	}
 
 	/**

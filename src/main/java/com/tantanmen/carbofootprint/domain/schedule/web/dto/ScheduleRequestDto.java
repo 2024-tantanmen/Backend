@@ -22,6 +22,8 @@ public class ScheduleRequestDto {
 		@Length(max = 10, message = "일정 이름은 최대 10글자 입니다.")
 		@NotBlank(message = "일정 이름을 작성해주세요.")
 		private String name;
+		private Long month;
+		private Long day;
 		private List<FoodType> first_meal;
 		private List<FoodType> second_meal;
 		private List<FoodType> third_meal;

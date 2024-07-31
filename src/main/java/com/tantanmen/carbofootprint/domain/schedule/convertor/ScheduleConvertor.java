@@ -25,6 +25,8 @@ public class ScheduleConvertor {
 			.secondMealList(new ArrayList<>())
 			.thirdMealList(new ArrayList<>())
 			.otherMealList(new ArrayList<>())
+			.month(request.getMonth())
+			.day(request.getDay())
 			.build();
 
 		addMealList(request, schedule);

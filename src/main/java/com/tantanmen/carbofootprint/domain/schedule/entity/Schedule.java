@@ -7,6 +7,7 @@ import com.tantanmen.carbofootprint.domain.schedule.entity.meal.FirstMeal;
 import com.tantanmen.carbofootprint.domain.schedule.entity.meal.OtherMeal;
 import com.tantanmen.carbofootprint.domain.schedule.entity.meal.SecondMeal;
 import com.tantanmen.carbofootprint.domain.schedule.entity.meal.ThirdMeal;
+import com.tantanmen.carbofootprint.global.entity.BaseEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -33,7 +34,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "schedule")
-public class Schedule {
+public class Schedule extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -47,6 +48,12 @@ public class Schedule {
 
 	@Column(name = "step_count")
 	private Long stepCount;
+
+	@Column(name = "month")
+	private Long month;
+
+	@Column(name = "day")
+	private Long day;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")

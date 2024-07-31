@@ -54,4 +54,21 @@ public class ScheduleCommandServiceImpl implements ScheduleCommandService{
 
 		return scheduleRepository.save(schedule);
 	}
+
+	/**
+	 * 일정 데이터 삭제
+	 */
+	@Override
+	public Long deleteSchedule(Long scheduleId, Member member){
+		// 일정 검색, 없는 경우 예외
+		Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new ScheduleNotFoundException());
+
+		// 사용자가 작성한 일정이 아닌 경우 예외 처리
+		if(schedule.getMember().getId() != member.getId()){
+			throw new GeneralException(ErrorStatus._SCHEDULE_FORBIDDEN);
+		}
+
+		scheduleRepository.delete(schedule);
+		return scheduleId;
+	}
 }

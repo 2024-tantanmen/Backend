@@ -61,6 +61,17 @@ public class ScheduleResponseDto {
 	@NoArgsConstructor
 	@AllArgsConstructor
 	public static class UpdateScheduleResponseDto{
-		private Long schedule_id;
+		private Long update_schedule_id;
+	}
+
+	/**
+	 * 일정 삭제 응답 DTO
+	 */
+	@Builder
+	@Getter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class DeleteScheduleResponseDto{
+		private Long deleted_schedule_id;
 	}
 }

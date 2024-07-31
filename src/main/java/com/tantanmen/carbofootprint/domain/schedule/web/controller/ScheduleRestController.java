@@ -2,13 +2,13 @@ package com.tantanmen.carbofootprint.domain.schedule.web.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tantanmen.carbofootprint.domain.member.entity.Member;
@@ -67,9 +67,22 @@ public class ScheduleRestController {
 	ScheduleRequestDto.AddScheduleRequestDto request, @PathVariable(name = "scheduleId") Long scheduleId, @Parameter(hidden = true) @LoginMember Member member){
 		Schedule schedule = scheduleCommandService.updateSchedule(request, scheduleId, member);
 		ScheduleResponseDto.UpdateScheduleResponseDto result = ScheduleResponseDto.UpdateScheduleResponseDto.builder()
-			.schedule_id(schedule.getId())
+			.update_schedule_id(schedule.getId())
 			.build();
 
+		return ApiResponse.onSuccess(result);
+	}
+
+	/**
+	 * 일정 삭제 요청 API
+	 */
+	@DeleteMapping("/{scheduleId}")
+	public ApiResponse<ScheduleResponseDto.DeleteScheduleResponseDto> deleteSchedule(@PathVariable(name = "scheduleId") Long scheduleId, @Parameter(hidden = true) @LoginMember Member member){
+		Long deletedScheduleId = scheduleCommandService.deleteSchedule(scheduleId, member);
+		ScheduleResponseDto.DeleteScheduleResponseDto result = ScheduleResponseDto.DeleteScheduleResponseDto
+			.builder()
+			.deleted_schedule_id(deletedScheduleId)
+			.build();
 		return ApiResponse.onSuccess(result);
 	}
 }

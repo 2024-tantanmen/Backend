@@ -43,6 +43,12 @@ public class Member {
 	@Column(name = "username", nullable = false, unique = true)
 	private String username;
 
+	@Column(name = "attendance_streak_count")
+	private Integer attendanceStreakCount;
+
+	@Column(name = "last_login_date")
+	private String lastLoginDate;
+
 	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Authority> authorityList;
 
@@ -74,5 +80,9 @@ public class Member {
 	public void addSchedule(Schedule schedule){
 		schedule.changeMember(this);
 		scheduleList.add(schedule);
+	}
+
+	public void changeAttendanceStreakCount(Integer count){
+		this.attendanceStreakCount = count;
 	}
 }

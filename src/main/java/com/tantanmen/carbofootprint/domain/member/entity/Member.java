@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.tantanmen.carbofootprint.domain.community.entity.mapping.ChatMessage;
 import com.tantanmen.carbofootprint.domain.community.entity.mapping.MemberChatRoom;
+import com.tantanmen.carbofootprint.domain.schedule.entity.Schedule;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -51,6 +52,9 @@ public class Member {
 	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ChatMessage> chatMessageList;
 
+	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Schedule> scheduleList;
+
 	// 연관 관계 편의 메서드
 	public void addAuthority(Authority authority) {
 		authority.changeMember(this);
@@ -65,5 +69,10 @@ public class Member {
 	public void addChatMessage(ChatMessage chatMessage) {
 		chatMessage.changeSender(this);
 		chatMessageList.add(chatMessage);
+	}
+
+	public void addSchedule(Schedule schedule){
+		schedule.changeMember(this);
+		scheduleList.add(schedule);
 	}
 }

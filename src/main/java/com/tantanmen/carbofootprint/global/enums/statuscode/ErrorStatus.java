@@ -22,8 +22,11 @@ public enum ErrorStatus implements BaseCode {
 	_CLASSIFICAION_REQUEST_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "CLASSIFICATION5001", "음식 사진 AI 요청 중 오류가 발생했습니다."),
 	_CLASSIFICATION_FAIL(HttpStatus.BAD_REQUEST, "CLASSIFICATION4001", "음식 사진 인식에 실패했습니다."),
 
-	// chat
+	// schedule
+	_SCHEDULE_NOT_FOUND(HttpStatus.NOT_FOUND, "SCHEDULE4001", "존재하지 않는 일정입니다."),
+	_SCHEDULE_FORBIDDEN(HttpStatus.FORBIDDEN, "SCHEDULE4002", "일정에 접근 권한이 없는 사용자입니다."),
 
+	// chat
 	_CHAT_ROOM_ENTRY_NOT_FOUND(HttpStatus.NOT_FOUND, "CHAT4001", "입장한 내역이 없는 채팅방입니다."),
 	_CHAT_ROOM_NOT_EXIST(HttpStatus.NOT_FOUND, "CHAT4002", "존재하지 않는 채팅방입니다.");
 

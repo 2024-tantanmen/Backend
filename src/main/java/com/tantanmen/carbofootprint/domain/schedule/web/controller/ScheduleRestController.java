@@ -3,9 +3,12 @@ package com.tantanmen.carbofootprint.domain.schedule.web.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tantanmen.carbofootprint.domain.member.entity.Member;
@@ -54,5 +57,19 @@ public class ScheduleRestController {
 	public ApiResponse<ScheduleResponseDto.FindAllScheduleResponseDto> getAllSchedules(@Parameter(hidden = true) @LoginMember Member member){
 		List<Schedule> scheduleList = scheduleQueryService.getAllSchedules(member);
 		return ApiResponse.onSuccess(ScheduleConvertor.toFindAllScheduleResponseDto(scheduleList));
+	}
+
+	/**
+	 * 일정 변경 요청 API
+	 */
+	@PutMapping("/{scheduleId}")
+	public ApiResponse<ScheduleResponseDto.UpdateScheduleResponseDto> updateSchedule(@Valid @RequestBody
+	ScheduleRequestDto.AddScheduleRequestDto request, @PathVariable(name = "scheduleId") Long scheduleId, @Parameter(hidden = true) @LoginMember Member member){
+		Schedule schedule = scheduleCommandService.updateSchedule(request, scheduleId, member);
+		ScheduleResponseDto.UpdateScheduleResponseDto result = ScheduleResponseDto.UpdateScheduleResponseDto.builder()
+			.schedule_id(schedule.getId())
+			.build();
+
+		return ApiResponse.onSuccess(result);
 	}
 }

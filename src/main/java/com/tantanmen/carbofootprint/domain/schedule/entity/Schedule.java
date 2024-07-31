@@ -3,10 +3,12 @@ package com.tantanmen.carbofootprint.domain.schedule.entity;
 import java.util.List;
 
 import com.tantanmen.carbofootprint.domain.member.entity.Member;
+import com.tantanmen.carbofootprint.domain.schedule.convertor.ScheduleConvertor;
 import com.tantanmen.carbofootprint.domain.schedule.entity.meal.FirstMeal;
 import com.tantanmen.carbofootprint.domain.schedule.entity.meal.OtherMeal;
 import com.tantanmen.carbofootprint.domain.schedule.entity.meal.SecondMeal;
 import com.tantanmen.carbofootprint.domain.schedule.entity.meal.ThirdMeal;
+import com.tantanmen.carbofootprint.domain.schedule.web.dto.ScheduleRequestDto;
 import com.tantanmen.carbofootprint.global.entity.BaseEntity;
 
 import jakarta.persistence.CascadeType;
@@ -98,5 +100,24 @@ public class Schedule extends BaseEntity {
 
 	public void changeMember(Member member){
 		this.member = member;
+	}
+
+	/**
+	 * Schedule 내부 데이터 변경
+	 */
+	public void updateData(ScheduleRequestDto.AddScheduleRequestDto request){
+		this.totalKcal = request.getCalorie();
+		this.title = request.getTitle();
+		this.exerciseDuration = request.getWorkoutTime();
+		this.stepCount = request.getStepCount();
+		this.month = request.getMonth();
+		this.day = request.getDay();
+
+		this.firstMealList.clear();
+		this.secondMealList.clear();
+		this.thirdMealList.clear();
+		this.otherMealList.clear();
+
+		ScheduleConvertor.addMealList(request, this);
 	}
 }

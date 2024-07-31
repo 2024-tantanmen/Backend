@@ -6,4 +6,6 @@ import com.tantanmen.carbofootprint.domain.schedule.web.dto.ScheduleRequestDto;
 
 public interface ScheduleCommandService {
 	Schedule addSchedule(ScheduleRequestDto.AddScheduleRequestDto request, Member member);
+	Schedule updateSchedule(ScheduleRequestDto.AddScheduleRequestDto request, Long scheduleId, Member member);
 }
+

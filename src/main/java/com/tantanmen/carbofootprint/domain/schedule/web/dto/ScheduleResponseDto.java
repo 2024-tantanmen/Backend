@@ -52,4 +52,15 @@ public class ScheduleResponseDto {
 		private Long stepCount;
 		private Long day;
 	}
+
+	/**
+	 * 일정 수정 응답 DTO
+	 */
+	@Builder
+	@Getter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class UpdateScheduleResponseDto{
+		private Long schedule_id;
+	}
 }

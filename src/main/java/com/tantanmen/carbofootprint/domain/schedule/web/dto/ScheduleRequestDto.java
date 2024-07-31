@@ -34,12 +34,12 @@ public class ScheduleRequestDto {
 		@Min(value = 1, message = "날짜 입력이 잘못되었습니다.")
 		@Max(value = 31, message = "날짜 입력이 잘못되었습니다.")
 		private Long day;
-		private List<FoodType> first_meal;
-		private List<FoodType> second_meal;
-		private List<FoodType> third_meal;
-		private List<FoodType> other_meal;
-		private Long total_kcal;
-		private Long exercise_duration;
-		private Long step_count;
+		private List<FoodType> firstMeal;
+		private List<FoodType> secondMeal;
+		private List<FoodType> thirdMeal;
+		private List<FoodType> extraMeal;
+		private Long calorie;
+		private Long workoutTime;
+		private Long stepCount;
 	}
 }

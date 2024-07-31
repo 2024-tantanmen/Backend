@@ -20,9 +20,9 @@ public class ScheduleConvertor {
 	 */
 	public static Schedule toSchedule(ScheduleRequestDto.AddScheduleRequestDto request){
 		Schedule schedule = Schedule.builder()
-			.totalKcal(request.getTotal_kcal())
-			.exerciseDuration(request.getExercise_duration())
-			.stepCount(request.getStep_count())
+			.totalKcal(request.getCalorie())
+			.exerciseDuration(request.getWorkoutTime())
+			.stepCount(request.getStepCount())
 			.firstMealList(new ArrayList<>())
 			.secondMealList(new ArrayList<>())
 			.thirdMealList(new ArrayList<>())
@@ -43,11 +43,11 @@ public class ScheduleConvertor {
 	 * FoodType 요청 List -> 식단 데이터로 변경
 	 */
 
-	private static void addMealList(ScheduleRequestDto.AddScheduleRequestDto request, Schedule schedule){
-		toFirstMealList(request.getFirst_meal(), schedule);
-		toSecondMealList(request.getSecond_meal(), schedule);
-		toThirdMealList(request.getThird_meal(), schedule);
-		toOtherMealList(request.getOther_meal(), schedule);
+	public static void addMealList(ScheduleRequestDto.AddScheduleRequestDto request, Schedule schedule){
+		toFirstMealList(request.getFirstMeal(), schedule);
+		toSecondMealList(request.getSecondMeal(), schedule);
+		toThirdMealList(request.getThirdMeal(), schedule);
+		toOtherMealList(request.getExtraMeal(), schedule);
 	}
 
 	private static void toFirstMealList(List<FoodType> request, Schedule schedule){

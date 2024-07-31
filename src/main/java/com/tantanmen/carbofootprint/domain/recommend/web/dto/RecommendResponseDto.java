@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 /**
  * 음식 추천 응답 Dto
  */
-
+@Schema(title = "RECOMMEND_RES_01", description = "음식 추천 응답 DTO")
 public class RecommendResponseDto {
 	@Builder
 	@Getter

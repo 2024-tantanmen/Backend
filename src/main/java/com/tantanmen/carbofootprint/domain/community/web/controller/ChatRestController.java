@@ -21,6 +21,11 @@ import com.tantanmen.carbofootprint.domain.member.entity.Member;
 import com.tantanmen.carbofootprint.global.annotation.LoginMember;
 import com.tantanmen.carbofootprint.global.response.ApiResponse;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +34,7 @@ import lombok.extern.slf4j.Slf4j;
  * 채팅방 목록, 채팅 내역 등 Rest 요청 컨트롤러
  * 채팅(WebSocket)의 경우 ChatController 클래스에 작성
  */
+@Tag(name = "커뮤니티 관련 Rest API", description = "커뮤니티(채팅) 관련 기능 API")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -40,6 +46,20 @@ public class ChatRestController {
 	/**
 	 * 모든 채팅방 목록 조회
 	 */
+	@Operation(summary = "채팅방 입장 목록 조회 API", description = "사용자가 입장할 수 있는(현재 입장하지 않은) 모든 채팅방 조회 API")
+	@ApiResponses(value = {
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(
+			responseCode = "COMMON200",
+			description = "요청 성공",
+			content = {
+				@Content(
+					schema = @Schema(
+						implementation = ChatResponseDto.ChatRoomPreviewResponseDto.class
+					)
+				)
+			}
+		)
+	})
 	@GetMapping("/rooms")
 	public ApiResponse<List<ChatResponseDto.ChatRoomPreviewResponseDto>> getAllChatRooms() {
 		List<ChatResponseDto.ChatRoomPreviewResponseDto> result = chatQueryService.getAllChatRooms()
@@ -52,8 +72,21 @@ public class ChatRestController {
 
 	/**
 	 * 채팅 방 생성
-	 * 입장은 웹소켓으로 요청
 	 */
+	@Operation(summary = "채팅방 생성 API", description = "채팅방 생성 API")
+	@ApiResponses(value = {
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(
+			responseCode = "COMMON200",
+			description = "요청 성공",
+			content = {
+				@Content(
+					schema = @Schema(
+						implementation = ChatResponseDto.EnterChatRoomResponseDto.class
+					)
+				)
+			}
+		)
+	})
 	@PostMapping("/room")
 	public ApiResponse<ChatResponseDto.EnterChatRoomResponseDto> createRoom(@Valid @RequestBody
 	ChatRequestDto.CreateChatRoomRequestDto request, @LoginMember Member member) {
@@ -69,6 +102,32 @@ public class ChatRestController {
 	/**
 	 * 이전 채팅 내역
 	 */
+
+	@Operation(summary = "이전 채팅 내역 조회 API", description = "사용자가 채팅방에 입장 한 이후의 모든 채팅 내역 조회 API")
+	@ApiResponses(value = {
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(
+			responseCode = "COMMON200",
+			description = "요청 성공",
+			content = {
+				@Content(
+					schema = @Schema(
+						implementation = ChatResponseDto.ChatMessageResponseDto.class
+					)
+				)
+			}
+		),
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(
+			responseCode = "CHAT4001",
+			description = "요청한 채팅방이 아직 사용자가 입장하지 않은 채팅방인 경우",
+			content = {
+				@Content(
+					schema = @Schema(
+						example = "입장한 내역이 없는 채팅방입니다."
+					)
+				)
+			}
+		)
+	})
 	@GetMapping("/rooms/{roomId}/messages")
 	public ApiResponse<List<ChatResponseDto.ChatMessageResponseDto>> getRoomChatMessages(
 		@PathVariable(name = "roomId") Long roomId, @LoginMember Member member) {

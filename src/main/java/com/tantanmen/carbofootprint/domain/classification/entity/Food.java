@@ -1,10 +1,14 @@
 package com.tantanmen.carbofootprint.domain.classification.entity;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -73,5 +77,13 @@ public class Food {
 	@Column(name = "transfat")
 	private Double transfat;
 
+	@OneToMany(mappedBy = "food", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<ClassificationResult> classificationResultList;
+
+	// 연관 관계 편의 메서드
+	public void addClassificationResult(ClassificationResult classificationResult){
+		classificationResult.changeFood(this);
+		classificationResultList.add(classificationResult);
+	}
 
 }

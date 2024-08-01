@@ -1,6 +1,5 @@
 package com.tantanmen.carbofootprint.domain.community.web.controller;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import com.tantanmen.carbofootprint.domain.community.service.ChatCommandService;
 import com.tantanmen.carbofootprint.domain.community.web.dto.ChatRequestDto;
 import com.tantanmen.carbofootprint.domain.community.web.dto.ChatResponseDto;
-import com.tantanmen.carbofootprint.domain.member.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 public class ChatController {
 	private final SimpMessagingTemplate messagingTemplate;
 	private final ChatCommandService chatCommandService;
-	private final MemberService memberService;
 
 	@MessageMapping("/chat.sendMessage")
 	public void sendMessage(@Payload ChatRequestDto.SendChatRequestDto request, SimpMessageHeaderAccessor headerAccessor) {

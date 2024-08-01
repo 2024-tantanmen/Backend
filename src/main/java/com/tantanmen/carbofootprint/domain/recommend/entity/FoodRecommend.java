@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.tantanmen.carbofootprint.domain.recommend.entity.mapping.FoodAllergen;
 import com.tantanmen.carbofootprint.domain.recommend.entity.mapping.FoodPreference;
+import com.tantanmen.carbofootprint.domain.recommend.entity.mapping.FoodRecommendResult;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -51,6 +52,9 @@ public class FoodRecommend {
 	@OneToMany(mappedBy = "foodRecommend", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<FoodPreference> foodPreferenceList;
 
+	@OneToMany(mappedBy = "foodRecommend", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<FoodRecommendResult> foodRecommendResultList;
+
 	// 연관관계 편의 메서드
 	public void addFoodAllergen(FoodAllergen foodAllergen) {
 		foodAllergen.changeFoodRecommend(this);
@@ -60,5 +64,10 @@ public class FoodRecommend {
 	public void addFoodPreference(FoodPreference foodPreference) {
 		foodPreference.changeFoodRecommend(this);
 		foodPreferenceList.add(foodPreference);
+	}
+
+	public void addFoodRecommendResult(FoodRecommendResult foodRecommendResult){
+		foodRecommendResult.changeFoodRecommend(this);
+		foodRecommendResultList.add(foodRecommendResult);
 	}
 }

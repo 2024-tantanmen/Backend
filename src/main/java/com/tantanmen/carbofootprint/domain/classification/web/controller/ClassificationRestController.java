@@ -3,17 +3,22 @@ package com.tantanmen.carbofootprint.domain.classification.web.controller;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tantanmen.carbofootprint.domain.classification.convertor.ClassificationConvertor;
+import com.tantanmen.carbofootprint.domain.classification.entity.ClassificationResult;
 import com.tantanmen.carbofootprint.domain.classification.entity.Food;
 import com.tantanmen.carbofootprint.domain.classification.service.ClassificationService;
 import com.tantanmen.carbofootprint.domain.classification.web.dto.ClassificationRequestDto;
 import com.tantanmen.carbofootprint.domain.classification.web.dto.ClassificationResponseDto;
+import com.tantanmen.carbofootprint.domain.member.entity.Member;
+import com.tantanmen.carbofootprint.global.annotation.LoginMember;
 import com.tantanmen.carbofootprint.global.response.ApiResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -79,6 +84,34 @@ public class ClassificationRestController {
 		// food entity => dto 변환
 		ClassificationResponseDto.FoodClassificationResponseDto result = ClassificationConvertor.toFoodClassificationResponseDto(
 			food);
+
+		return ApiResponse.onSuccess(result);
+	}
+
+	/**
+	 * 음식 사진 인식 결과 데이터 저장
+	 */
+	@Operation(summary = "음식 사진 인식 결과 데이터 저장 API", description = "음식 사진 인식 결과 데이터 저장 API")
+	@ApiResponses(value = {
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(
+			responseCode = "COMMON200",
+			description = "요청 성공",
+			content = {
+				@Content(
+					schema = @Schema(
+						implementation = ClassificationResponseDto.SaveClassificationResultResponseDto.class
+					)
+				)
+			}
+		)
+	})
+	@PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ApiResponse<ClassificationResponseDto.SaveClassificationResultResponseDto> saveClassificationResult(@Valid @ModelAttribute
+		ClassificationRequestDto.SaveClassificationResultRequestDto request, @Parameter(hidden = true) @LoginMember Member member){
+		ClassificationResult classificationResult = classificationService.saveClassificationResult(request, member);
+		ClassificationResponseDto.SaveClassificationResultResponseDto result = ClassificationResponseDto.SaveClassificationResultResponseDto.builder()
+			.classification_result_id(classificationResult.getId())
+			.build();
 
 		return ApiResponse.onSuccess(result);
 	}

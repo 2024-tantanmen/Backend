@@ -41,12 +41,11 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		Member member = null;
-		if (authentication != null) {
+		if (authentication.getPrincipal() != "anonymousUser") {
 			return memberRepository.findByLoginId((String)authentication.getPrincipal())
 				.orElseThrow(() -> new MemberNotExistException());
 		} else {
-			log.info("알 수 없는 인증 타입");
-			throw new IllegalStateException("지원하지 않는 인증 타입입니다.");
+			return null;
 		}
 	}
 }

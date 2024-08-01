@@ -7,14 +7,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tantanmen.carbofootprint.domain.member.entity.Member;
 import com.tantanmen.carbofootprint.domain.recommend.converter.RecommendConverter;
 import com.tantanmen.carbofootprint.domain.recommend.entity.FoodRecommend;
+import com.tantanmen.carbofootprint.domain.recommend.service.RecommendCommandService;
 import com.tantanmen.carbofootprint.domain.recommend.service.RecommendQueryService;
 import com.tantanmen.carbofootprint.domain.recommend.web.dto.RecommendRequestDto;
 import com.tantanmen.carbofootprint.domain.recommend.web.dto.RecommendResponseDto;
+import com.tantanmen.carbofootprint.global.annotation.LoginMember;
 import com.tantanmen.carbofootprint.global.response.ApiResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -30,6 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 public class RecommendRestController {
 
 	private final RecommendQueryService recommendQueryService;
+	private final RecommendCommandService recommendCommandService;
 
 	/**
 	 * 음식 추천 기능 요청 API
@@ -72,11 +77,18 @@ public class RecommendRestController {
 	})
 	@PostMapping("recommend")
 	public ApiResponse<RecommendResponseDto.RecommendFoodResponseDto> recommendFoods(
-		@RequestBody RecommendRequestDto.RecommendFoodRequestDto request) {
+		@RequestBody RecommendRequestDto.RecommendFoodRequestDto request, @Parameter(hidden = true) @LoginMember Member member) {
 		log.info(request.toString());
+		// 음식 추천
 		List<FoodRecommend> recommendFoodListRecommend = recommendQueryService.recommendFoods(request);
 		RecommendResponseDto.RecommendFoodResponseDto result = RecommendConverter.toRecommendFoodResponseDto(
 			recommendFoodListRecommend, request.getAllergen_list(), request.getPreference_list());
+
+		// 만약 사용자가 로그인 한 상태라면, 결과 데이터 저장
+		if(member != null){
+			recommendCommandService.saveResultData(member, recommendFoodListRecommend, request);
+		}
+
 		return ApiResponse.onSuccess(result);
 	}
 }

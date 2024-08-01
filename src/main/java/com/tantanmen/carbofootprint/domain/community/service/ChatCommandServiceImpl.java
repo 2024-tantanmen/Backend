@@ -156,13 +156,18 @@ public class ChatCommandServiceImpl implements ChatCommandService {
 			loginId, roomId);
 		if(memberChatRoomOptional.isEmpty()){
 			log.error("memberChatRoom이 존재하지 않습니다. loginId = {}, roomId = {}", loginId, roomId);
+			return;
 		}
 
 		MemberChatRoom memberChatRoom = memberChatRoomOptional.get();
 
-		Long count = chatMessageRepository.findChatMessageCountByChatRoomId(roomId);
+		Optional<ChatMessage> chatMessageOptional = chatMessageRepository.findTopByChatRoomIdOrderByIdDesc(roomId);
+		if(chatMessageOptional.isEmpty()){
+			log.error("마지막 채팅이 없습니다. roomId = {}", roomId);
+		}
+		Long lastChatId = chatMessageOptional.get().getId();
 
-		memberChatRoom.changeLastChatId(count);
+		memberChatRoom.changeLastChatId(lastChatId);
 		memberChatRoomRepository.save(memberChatRoom);
 	}
 }

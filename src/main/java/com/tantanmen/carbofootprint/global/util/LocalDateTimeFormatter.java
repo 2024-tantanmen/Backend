@@ -16,7 +16,7 @@ public class LocalDateTimeFormatter {
 		DayOfWeek dayOfWeek = dateTime.getDayOfWeek();
 		String dayPart = getDayOfWeekInKorean(dayOfWeek);
 
-		return datePart + "." + dayPart;
+		return datePart + "." + dayPart + "요일";
 	}
 
 	/**

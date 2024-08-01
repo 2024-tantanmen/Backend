@@ -20,6 +20,7 @@ public class ScheduleConvertor {
 	 */
 	public static Schedule toSchedule(ScheduleRequestDto.AddScheduleRequestDto request){
 		Schedule schedule = Schedule.builder()
+			.title(request.getTitle())
 			.totalKcal(request.getCalorie())
 			.exerciseDuration(request.getWorkoutTime())
 			.stepCount(request.getStepCount())

@@ -2,6 +2,7 @@ package com.tantanmen.carbofootprint.domain.member.entity;
 
 import java.util.List;
 
+import com.tantanmen.carbofootprint.domain.classification.entity.ClassificationResult;
 import com.tantanmen.carbofootprint.domain.community.entity.mapping.ChatMessage;
 import com.tantanmen.carbofootprint.domain.community.entity.mapping.MemberChatRoom;
 import com.tantanmen.carbofootprint.domain.recommend.entity.mapping.MemberFoodRecommend;
@@ -65,6 +66,9 @@ public class Member {
 	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<MemberFoodRecommend> memberFoodRecommendList;
 
+	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<ClassificationResult> classificationResultList;
+
 	// 연관 관계 편의 메서드
 	public void addAuthority(Authority authority) {
 		authority.changeMember(this);
@@ -93,5 +97,9 @@ public class Member {
 	public void addMemberFoodRecommend(MemberFoodRecommend memberFoodRecommend){
 		memberFoodRecommend.changeMember(this);
 		memberFoodRecommendList.add(memberFoodRecommend);
+	}
+	public void addClassificationResult(ClassificationResult classificationResult){
+		classificationResult.changeMember(this);
+		classificationResultList.add(classificationResult);
 	}
 }

@@ -23,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 public class ChatController {
 	private final SimpMessagingTemplate messagingTemplate;
 	private final ChatCommandService chatCommandService;
-	private final MemberService memberService;
 
 	@MessageMapping("/chat.sendMessage")
 	public void sendMessage(@Payload ChatRequestDto.SendChatRequestDto request, SimpMessageHeaderAccessor headerAccessor) {

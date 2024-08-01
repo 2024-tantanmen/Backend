@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tantanmen.carbofootprint.domain.community.service.ChatQueryServiceImpl;
 import com.tantanmen.carbofootprint.domain.member.entity.Member;
 import com.tantanmen.carbofootprint.domain.mypage.web.dto.MyPageResponseDto;
 import com.tantanmen.carbofootprint.domain.recommend.service.RecommendQueryService;
@@ -22,9 +23,15 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/my-page")
 public class MyPageRestController {
 	private final RecommendQueryService recommendQueryService;
+	private final ChatQueryServiceImpl chatQueryService;
 
 	@GetMapping("/recommend")
 	public ApiResponse<List<MyPageResponseDto.MyPageRecommendResponseDto>> getRecommendList(@Parameter(hidden = true) @LoginMember Member member){
 		return ApiResponse.onSuccess(recommendQueryService.getRecommendList(member));
+	}
+
+	@GetMapping("/chat")
+	public ApiResponse<List<MyPageResponseDto.MyPageChatRoomResponseDto>> getChatRoomList(@Parameter(hidden = true) @LoginMember Member member){
+		return ApiResponse.onSuccess(chatQueryService.getMyPageChatRoomList(member));
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.tantanmen.carbofootprint.domain.community.entity.mapping.ChatMessage;
 import com.tantanmen.carbofootprint.domain.community.entity.mapping.MemberChatRoom;
+import com.tantanmen.carbofootprint.domain.recommend.entity.mapping.MemberFoodRecommend;
 import com.tantanmen.carbofootprint.domain.schedule.entity.Schedule;
 
 import jakarta.persistence.CascadeType;
@@ -61,6 +62,9 @@ public class Member {
 	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Schedule> scheduleList;
 
+	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<MemberFoodRecommend> memberFoodRecommendList;
+
 	// 연관 관계 편의 메서드
 	public void addAuthority(Authority authority) {
 		authority.changeMember(this);
@@ -84,5 +88,10 @@ public class Member {
 
 	public void changeAttendanceStreakCount(Integer count){
 		this.attendanceStreakCount = count;
+	}
+
+	public void addMemberFoodRecommend(MemberFoodRecommend memberFoodRecommend){
+		memberFoodRecommend.changeMember(this);
+		memberFoodRecommendList.add(memberFoodRecommend);
 	}
 }

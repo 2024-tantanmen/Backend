@@ -60,4 +60,15 @@ public class ChatRequestDto {
 		private Long chat_room_id;
 	}
 
+	/**
+	 * 채팅방 퇴장 웹 소켓 요청 DTO
+	 */
+	@Getter
+	@Setter
+	@ToString
+	public static class ExitChatRoomRequestDto {
+		@Schema(description = "퇴장할 채팅방의 고유 번호", example = "1")
+		@NotNull(message = "퇴장할 채팅방의 고유 번호를 입력해주세요.")
+		private Long chat_room_id;
+	}
 }

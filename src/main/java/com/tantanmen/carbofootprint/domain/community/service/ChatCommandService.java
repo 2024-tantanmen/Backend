@@ -14,4 +14,5 @@ public interface ChatCommandService {
 	Member sendMessage(ChatRequestDto.SendChatRequestDto request, String loginId);
 
 	void onWebSocketDisconnect(String loginId, Long roomId);
+	Long exitChatRoom(Long chatRoomId, String loginId);
 }

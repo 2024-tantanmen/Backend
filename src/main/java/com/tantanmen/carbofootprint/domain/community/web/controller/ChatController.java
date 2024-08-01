@@ -59,4 +59,21 @@ public class ChatController {
 		// 채팅방에 메시지 전송
 		messagingTemplate.convertAndSend("/topic/" + request.getChat_room_id(), responseDto);
 	}
+
+	@MessageMapping("/chat.exitRoom")
+	public void exitRoom(@Payload ChatRequestDto.ExitChatRoomRequestDto request, SimpMessageHeaderAccessor headerAccessor){
+		log.info("chat.exitRoom chatRoomId = {}", request.getChat_room_id());
+		String loginId = (String)headerAccessor.getSessionAttributes().get("loginId");
+		chatCommandService.exitChatRoom(request.getChat_room_id(), loginId);
+
+		ChatResponseDto.ChatMessageResponseDto responseDto = ChatResponseDto.ChatMessageResponseDto.builder()
+			.type("out")
+			.chat(loginId + "님이 퇴장하셨습니다.")
+			.date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm")))
+			.sender_username(loginId)
+			.build();
+
+		// 채팅방에 메시지 전송
+		messagingTemplate.convertAndSend("/topic/" + request.getChat_room_id(), responseDto);
+	}
 }

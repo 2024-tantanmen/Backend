@@ -19,6 +19,8 @@ import com.tantanmen.carbofootprint.domain.community.repository.ChatMessageRepos
 import com.tantanmen.carbofootprint.domain.community.repository.ChatRoomRepository;
 import com.tantanmen.carbofootprint.domain.community.repository.MemberChatRoomRepository;
 import com.tantanmen.carbofootprint.domain.community.web.dto.ChatRequestDto;
+import com.tantanmen.carbofootprint.global.enums.statuscode.ErrorStatus;
+import com.tantanmen.carbofootprint.global.exception.GeneralException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -170,4 +172,44 @@ public class ChatCommandServiceImpl implements ChatCommandService {
 		memberChatRoom.changeLastChatId(lastChatId);
 		memberChatRoomRepository.save(memberChatRoom);
 	}
+
+	/**
+	 * 채팅방 퇴장
+	 */
+	@Override
+	public Long exitChatRoom(Long chatRoomId, String loginId) {
+		Member member = memberRepository.findByLoginId(loginId).get();
+		ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId).orElseThrow(() -> new ChatRoomNotExistException());
+		// 현재 채팅방 인원 감소
+		chatRoom.decreaseCurrentCapacity();
+		chatRoomRepository.save(chatRoom);
+
+		// 퇴장 채팅 생성 후 저장
+		ChatMessage chatMessage = makeExitChat(member, chatRoom);
+
+		MemberChatRoom memberChatRoom = memberChatRoomRepository.findByMemberIdAndChatRoomId(member.getId(),
+			chatRoom.getId()).orElseThrow(() -> new GeneralException(
+			ErrorStatus._CHAT_ROOM_ENTRY_NOT_FOUND));
+
+		memberChatRoomRepository.delete(memberChatRoom);
+
+		return chatRoomId;
+	}
+
+	public ChatMessage makeExitChat(Member member, ChatRoom chatRoom){
+		// 입장 알림 채팅 추가
+		ChatMessage chatMessage = ChatMessage.builder()
+			.content("퇴장")
+			.type(ChatType.OUT)
+			.build();
+
+		// 연관관계 매핑
+		member.addChatMessage(chatMessage);
+		chatRoom.addChatMessage(chatMessage);
+
+		// 채팅방 입장 채팅 메시지 데이터 저장
+		chatMessageRepository.save(chatMessage);
+		return chatMessage;
+	}
+
 }

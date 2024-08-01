@@ -118,6 +118,7 @@ public class ScheduleConvertor {
 	 */
 	private static ScheduleResponseDto.SchedulePreviewResponseDto toSchedulePreviewResponseDto(Schedule schedule){
 		return ScheduleResponseDto.SchedulePreviewResponseDto.builder()
+			.schedule_id(schedule.getId())
 			.title(schedule.getTitle())
 			.calorie(schedule.getTotalKcal())
 			.workoutTime(schedule.getExerciseDuration())

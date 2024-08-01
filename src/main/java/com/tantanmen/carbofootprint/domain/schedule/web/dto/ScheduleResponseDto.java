@@ -45,6 +45,8 @@ public class ScheduleResponseDto {
 	@NoArgsConstructor
 	@AllArgsConstructor
 	public static class SchedulePreviewResponseDto{
+		@Schema(description = "일정 고유 번호 값", example = "13")
+		private Long schedule_id;
 		@Schema(description = "일정 이름", example = "무탄수운동 1일차")
 		private String title;
 		@Schema(description = "첫 끼 목록", example = "[\"중식\", \"일식\"]")

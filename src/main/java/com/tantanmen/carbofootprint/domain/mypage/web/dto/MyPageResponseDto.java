@@ -10,15 +10,20 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Schema(title = "MYPAGE_RES_01", description = "마이페이지 관련 응답 DTO")
 public class MyPageResponseDto {
 	@Builder
 	@Getter
 	@NoArgsConstructor
 	@AllArgsConstructor
 	public static class MyPageRecommendResponseDto{
+		@Schema(description = "업로드 날짜", example = "08.21.수요일")
 		private String date;
+		@Schema(description = "사용자가 입력한 알레르기 목록", example = "[\"난류\", \"고등어\"]")
 		private List<String> allergen_list;
+		@Schema(description = "사용자가 입력한 식습관 목록", example = "[\"아재_입맛\", \"다이어트\"]")
 		private List<String> preference_list;
+		@Schema(description = "추천 음식 목록")
 		private List<RecommendResponseDto.RecommendFoodDetailDto> recommend_food_list;
 	}
 

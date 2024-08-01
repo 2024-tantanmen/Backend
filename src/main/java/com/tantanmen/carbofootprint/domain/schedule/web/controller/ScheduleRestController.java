@@ -96,7 +96,7 @@ public class ScheduleRestController {
 	/**
 	 * 일정 변경 요청 API
 	 */
-	@Operation(summary = "일정 생성 요청 API", description = "일정 생성 요청 API")
+	@Operation(summary = "일정 변경 요청 API", description = "일정 변경 요청 API")
 	@ApiResponses(value = {
 		@io.swagger.v3.oas.annotations.responses.ApiResponse(
 			responseCode = "COMMON200",

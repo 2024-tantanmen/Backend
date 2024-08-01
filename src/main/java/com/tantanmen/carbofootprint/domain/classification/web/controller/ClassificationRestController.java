@@ -88,6 +88,23 @@ public class ClassificationRestController {
 		return ApiResponse.onSuccess(result);
 	}
 
+	/**
+	 * 음식 사진 인식 결과 데이터 저장
+	 */
+	@Operation(summary = "음식 사진 인식 결과 데이터 저장 API", description = "음식 사진 인식 결과 데이터 저장 API")
+	@ApiResponses(value = {
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(
+			responseCode = "COMMON200",
+			description = "요청 성공",
+			content = {
+				@Content(
+					schema = @Schema(
+						implementation = ClassificationResponseDto.SaveClassificationResultResponseDto.class
+					)
+				)
+			}
+		)
+	})
 	@PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ApiResponse<ClassificationResponseDto.SaveClassificationResultResponseDto> saveClassificationResult(@Valid @ModelAttribute
 		ClassificationRequestDto.SaveClassificationResultRequestDto request, @Parameter(hidden = true) @LoginMember Member member){

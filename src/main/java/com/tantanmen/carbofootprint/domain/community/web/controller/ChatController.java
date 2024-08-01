@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import com.tantanmen.carbofootprint.domain.community.service.ChatCommandService;
 import com.tantanmen.carbofootprint.domain.community.web.dto.ChatRequestDto;
 import com.tantanmen.carbofootprint.domain.community.web.dto.ChatResponseDto;
-import com.tantanmen.carbofootprint.domain.member.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

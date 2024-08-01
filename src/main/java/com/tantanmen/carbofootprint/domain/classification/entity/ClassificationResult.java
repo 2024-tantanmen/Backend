@@ -3,6 +3,7 @@ package com.tantanmen.carbofootprint.domain.classification.entity;
 import org.hibernate.mapping.Join;
 
 import com.tantanmen.carbofootprint.domain.member.entity.Member;
+import com.tantanmen.carbofootprint.global.entity.BaseEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,7 +28,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "classification_result")
-public class ClassificationResult {
+public class ClassificationResult extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")

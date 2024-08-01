@@ -41,4 +41,34 @@ public class MyPageResponseDto {
 		@Schema(description = "채팅방 현재 인원 수", example = "6")
 		private Integer room_current_capacity; // 채팅방 현재 인원 수
 	}
+
+	/**
+	 * 음식 사진 인식 결과 데이터 응답 Dto
+	 */
+	@Builder
+	@Getter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class MyPageClassificationResponseDto {
+		@Schema(description = "업로드 날짜", example = "08.21.수요일")
+		private String date;
+		@Schema(description = "사진 인식에 사용된 이미지의 URL", example = "https://carbofootprint-bucket.s3.ap-northeast-2.amazonaws.com/%2F%2Fclassification/imagesjunha341a56ff9a-0824-4bee-b5a1-4bbf30d13524")
+		private String image_url;
+		@Schema(description = "음식 코드번호", example = "11015001")
+		private String food_code;
+		@Schema(description = "음식 이름", example = "잡채")
+		private String name;
+		@Schema(description = "음식 총량", example = "150")
+		private Integer amount;
+		@Schema(description = "총 열량", example = "198.82")
+		private Double calorie;
+		@Schema(description = "탄수화물 함량", example = "37.47")
+		private Double carb; // carbohydrate
+		@Schema(description = "단백질 함량", example = "2.59")
+		private Double prot; // protein
+		@Schema(description = "지방 함량", example = "4.7")
+		private Double fat;
+		@Schema(description = "당류 함량", example = "2.99")
+		private Double sugar;
+	}
 }

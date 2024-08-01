@@ -33,4 +33,16 @@ public class ClassificationResponseDto {
 		@Schema(description = "당류 함량", example = "2.99")
 		private Double sugar;
 	}
+
+	/**
+	 * 사진 인식 결과 저장 응답 DTO
+	 */
+	@Builder
+	@Getter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class SaveClassificationResultResponseDto{
+		@Schema(description = "결과 저장 고유 번호", example = "3")
+		private Long classification_result_id;
+	}
 }

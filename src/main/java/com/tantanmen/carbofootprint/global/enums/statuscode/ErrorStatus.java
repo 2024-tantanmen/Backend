@@ -28,7 +28,10 @@ public enum ErrorStatus implements BaseCode {
 
 	// chat
 	_CHAT_ROOM_ENTRY_NOT_FOUND(HttpStatus.NOT_FOUND, "CHAT4001", "입장한 내역이 없는 채팅방입니다."),
-	_CHAT_ROOM_NOT_EXIST(HttpStatus.NOT_FOUND, "CHAT4002", "존재하지 않는 채팅방입니다.");
+	_CHAT_ROOM_NOT_EXIST(HttpStatus.NOT_FOUND, "CHAT4002", "존재하지 않는 채팅방입니다."),
+
+	//S3
+	_S3_FILE_SAVE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "S35001", "S3 파일 저장에 실패했습니다.");
 
 	private final HttpStatus httpStatus;
 	private final String code;

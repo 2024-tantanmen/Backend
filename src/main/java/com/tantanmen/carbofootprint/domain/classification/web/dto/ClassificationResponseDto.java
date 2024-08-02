@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Schema(title = "CLASSIFICATION_RES_01", description = "사진 인식 응답 DTO")
 public class ClassificationResponseDto {
 
 	/**

@@ -2,6 +2,7 @@ package com.tantanmen.carbofootprint.domain.member.entity;
 
 import java.util.List;
 
+import com.tantanmen.carbofootprint.domain.addiction_test.entity.AddictionTest;
 import com.tantanmen.carbofootprint.domain.classification.entity.ClassificationResult;
 import com.tantanmen.carbofootprint.domain.community.entity.mapping.ChatMessage;
 import com.tantanmen.carbofootprint.domain.community.entity.mapping.MemberChatRoom;
@@ -69,6 +70,9 @@ public class Member {
 	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ClassificationResult> classificationResultList;
 
+	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<AddictionTest> addictionTestList;
+
 	// 연관 관계 편의 메서드
 	public void addAuthority(Authority authority) {
 		authority.changeMember(this);
@@ -101,5 +105,10 @@ public class Member {
 	public void addClassificationResult(ClassificationResult classificationResult){
 		classificationResult.changeMember(this);
 		classificationResultList.add(classificationResult);
+	}
+
+	public void addAddictionTest(AddictionTest addictionTest){
+		addictionTest.changeMember(this);
+		addictionTestList.add(addictionTest);
 	}
 }

@@ -64,7 +64,7 @@ public class ClassificationServiceImpl implements ClassificationService{
 		}
 
 		String uploadUrl = amazonS3Manager.uploadFile(
-			"/classification/images" + member.getLoginId() + UUID.randomUUID().toString(), request.getImage());
+			"/classification/images/" + member.getLoginId() + "/" + UUID.randomUUID().toString(), request.getImage());
 
 		ClassificationResult result = ClassificationResult.builder()
 			.imageUrl(uploadUrl)

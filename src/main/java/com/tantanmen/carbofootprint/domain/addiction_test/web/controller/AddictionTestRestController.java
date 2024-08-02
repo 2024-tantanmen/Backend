@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 탄수화물 중독 테스트 결과 데이터 저장 controller
  */
+@Tag(name = "탄수화물 중독 테스트 관련 API", description = "탄수화물 중독 테스트 관련 API")
 @Slf4j
 @RestController
 @RequiredArgsConstructor

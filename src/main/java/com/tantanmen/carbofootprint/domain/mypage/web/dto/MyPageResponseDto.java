@@ -76,4 +76,18 @@ public class MyPageResponseDto {
 		@Schema(description = "당류 함량", example = "2.99")
 		private Double sugar;
 	}
+
+	/**
+	 * 탄수화물 중독 테스트 결과 데이터 응답 DTO
+	 */
+	@Builder
+	@Getter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class MyPageAddictionTestResponseDto{
+		@Schema(description = "테스트 날짜", example = "08.21.수요일")
+		private String date;
+		@Schema(description = "체크한 항목 수", example = "5")
+		private Integer check_count;
+	}
 }

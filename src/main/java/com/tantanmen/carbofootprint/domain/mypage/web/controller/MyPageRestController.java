@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tantanmen.carbofootprint.domain.addiction_test.service.AddictionTestQueryService;
 import com.tantanmen.carbofootprint.domain.classification.service.ClassificationService;
 import com.tantanmen.carbofootprint.domain.community.service.ChatQueryServiceImpl;
 import com.tantanmen.carbofootprint.domain.member.entity.Member;
@@ -32,6 +33,7 @@ public class MyPageRestController {
 	private final RecommendQueryService recommendQueryService;
 	private final ChatQueryServiceImpl chatQueryService;
 	private final ClassificationService classificationService;
+	private final AddictionTestQueryService addictionTestQueryService;
 
 	@Operation(summary = "음식 추천 목록 조회 API", description = "사용자 맞춤 음식 추천 기록 조회 API")
 	@ApiResponses(value = {
@@ -90,5 +92,24 @@ public class MyPageRestController {
 	@GetMapping("/classification")
 	public ApiResponse<List<MyPageResponseDto.MyPageClassificationResponseDto>> getClassificationList(@Parameter(hidden = true) @LoginMember Member member){
 		return ApiResponse.onSuccess(classificationService.getMyPageClassificationResultList(member));
+	}
+
+	@Operation(summary = "탄수화물 중독 테스트 결과 목록 조회 API", description = "탄수화물 중독 테스트 결과 목록 조회 API")
+	@ApiResponses(value = {
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(
+			responseCode = "COMMON200",
+			description = "요청 성공",
+			content = {
+				@Content(
+					schema = @Schema(
+						implementation = MyPageResponseDto.MyPageAddictionTestResponseDto.class
+					)
+				)
+			}
+		)
+	})
+	@GetMapping("/addiction-test")
+	public ApiResponse<List<MyPageResponseDto.MyPageAddictionTestResponseDto>> getAddictionTestList(@Parameter(hidden = true) @LoginMember Member member){
+		return ApiResponse.onSuccess(addictionTestQueryService.getAddictionTestList(member));
 	}
 }

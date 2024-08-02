@@ -1,5 +1,7 @@
 package com.tantanmen.carbofootprint.domain.addiction_test.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,4 +13,5 @@ import com.tantanmen.carbofootprint.domain.addiction_test.entity.AddictionTest;
 
 @Repository
 public interface AddictionTestRepository extends JpaRepository<AddictionTest, Long> {
+	List<AddictionTest> findByMemberId(Long memberId);
 }

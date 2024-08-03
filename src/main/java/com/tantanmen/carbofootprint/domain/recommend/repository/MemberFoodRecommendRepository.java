@@ -1,6 +1,7 @@
 package com.tantanmen.carbofootprint.domain.recommend.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -13,4 +14,5 @@ import com.tantanmen.carbofootprint.domain.recommend.entity.mapping.MemberFoodRe
 @Repository
 public interface MemberFoodRecommendRepository extends JpaRepository<MemberFoodRecommend, Long> {
 	List<MemberFoodRecommend> findByMemberId(Long memberId);
+	Optional<MemberFoodRecommend> findById(Long memberFoodRecommendId);
 }

@@ -23,6 +23,8 @@ import com.tantanmen.carbofootprint.domain.recommend.repository.MemberFoodRecomm
 import com.tantanmen.carbofootprint.domain.recommend.repository.PreferenceRepository;
 import com.tantanmen.carbofootprint.domain.recommend.web.dto.RecommendRequestDto;
 import com.tantanmen.carbofootprint.domain.recommend.web.dto.RecommendResponseDto;
+import com.tantanmen.carbofootprint.global.enums.statuscode.ErrorStatus;
+import com.tantanmen.carbofootprint.global.exception.GeneralException;
 import com.tantanmen.carbofootprint.global.util.LocalDateTimeFormatter;
 
 import lombok.RequiredArgsConstructor;
@@ -110,6 +112,36 @@ public class RecommendQueryServiceImpl implements RecommendQueryService {
 			result.add(resultDto);
 		}
 		return result;
+	}
+
+	/**
+	 * 사용자 저장 데이터 하나 가져오기 (링크 공유용)
+	 */
+	@Override
+	public RecommendResponseDto.RecommendFoodResponseDto getOneRecommendResult(Long memberRecommendId){
+		MemberFoodRecommend memberFoodRecommend = memberFoodRecommendRepository.findById(memberRecommendId)
+			.orElseThrow(() -> new GeneralException(ErrorStatus._MEMBER_RECOMMEND_RESULT_NOT_EXIST));
+
+		List<RecommendResponseDto.RecommendFoodDetailDto> foodList = new ArrayList<>();
+		for (FoodRecommendResult foodRecommendResult : memberFoodRecommend.getFoodRecommendResultList()) {
+			FoodRecommend foodRecommend = foodRecommendResult.getFoodRecommend();
+			RecommendResponseDto.RecommendFoodDetailDto resultDto = RecommendResponseDto.RecommendFoodDetailDto.builder()
+				.name(foodRecommend.getFoodName())
+				.image_url(foodRecommend.getImageUrl())
+				.calorie(foodRecommend.getCalorie())
+				.carbohydrate(foodRecommend.getCarbohydrate())
+				.saccharide(foodRecommend.getSaccharide())
+				.build();
+
+			foodList.add(resultDto);
+		}
+
+		return RecommendResponseDto.RecommendFoodResponseDto.builder()
+			.member_recommend_id(memberFoodRecommend.getId())
+			.food_list(foodList)
+			.allergen_list(Arrays.stream(memberFoodRecommend.getRecommendAllergen().split("#")).toList())
+			.preference_list(Arrays.stream(memberFoodRecommend.getRecommendPreference().split("#")).toList())
+			.build();
 	}
 
 }

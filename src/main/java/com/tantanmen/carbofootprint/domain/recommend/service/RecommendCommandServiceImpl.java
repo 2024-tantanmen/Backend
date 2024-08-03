@@ -24,9 +24,12 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 @RequiredArgsConstructor
 public class RecommendCommandServiceImpl implements RecommendCommandService{
+	/**
+	 * 결과 데이터를 저장
+	 */
 
 	@Override
-	public void saveResultData(Member member, List<FoodRecommend> foodRecommendList, RecommendRequestDto.RecommendFoodRequestDto request){
+	public MemberFoodRecommend saveResultData(Member member, List<FoodRecommend> foodRecommendList, RecommendRequestDto.RecommendFoodRequestDto request){
 		MemberFoodRecommend memberFoodRecommend = MemberFoodRecommend.builder()
 			.recommendAllergen(allergenListToString(request.getAllergen_list()))
 			.recommendPreference(preferenceListToString(request.getPreference_list()))
@@ -42,6 +45,8 @@ public class RecommendCommandServiceImpl implements RecommendCommandService{
 		}
 
 		member.addMemberFoodRecommend(memberFoodRecommend);
+
+		return memberFoodRecommend;
 	}
 
 	private String allergenListToString(List<AllergenType> allergenList){

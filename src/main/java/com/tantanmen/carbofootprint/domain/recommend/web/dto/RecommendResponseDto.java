@@ -18,12 +18,14 @@ public class RecommendResponseDto {
 	@NoArgsConstructor
 	@AllArgsConstructor
 	public static class RecommendFoodResponseDto {
+		@Schema(description = "저장된 사용자의 음식 추천 고유 번호, 없을 경우 null", example = "3")
+		private Long member_recommend_id;
 		@Schema(description = "추천 음식 목록")
-		List<RecommendFoodDetailDto> food_list;
+		private List<RecommendFoodDetailDto> food_list;
 		@Schema(description = "사용자가 입력한 알레르기 목록", example = "[\"난류\", \"고등어\"]")
-		List<String> allergen_list;
+		private List<String> allergen_list;
 		@Schema(description = "사용자가 입력한 식습관 목록", example = "[\"아재_입맛\", \"다이어트\"]")
-		List<String> preference_list;
+		private List<String> preference_list;
 	}
 
 	@Builder

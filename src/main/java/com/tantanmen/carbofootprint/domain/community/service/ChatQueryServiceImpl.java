@@ -34,7 +34,12 @@ public class ChatQueryServiceImpl implements ChatQueryService {
 	 */
 	@Override
 	public List<ChatRoom> getAllChatRoomsByMemberNotExist(Member member) {
-		return chatRoomRepository.findAllByMemberNotExist(member.getId());
+		if(member != null) {
+			return chatRoomRepository.findAllByMemberNotExist(member.getId());
+		}
+		else {
+			return chatRoomRepository.findAll();
+		}
 	}
 
 	/**

@@ -17,6 +17,8 @@ public class MyPageResponseDto {
 	@NoArgsConstructor
 	@AllArgsConstructor
 	public static class MyPageRecommendResponseDto{
+		@Schema(description = "저장된 사용자의 음식 추천 고유 번호, 없을 경우 null", example = "3")
+		private Long member_recommend_id;
 		@Schema(description = "업로드 날짜", example = "08.21.수요일")
 		private String date;
 		@Schema(description = "사용자가 입력한 알레르기 목록", example = "[\"난류\", \"고등어\"]")

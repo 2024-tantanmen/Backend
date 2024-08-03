@@ -103,6 +103,7 @@ public class RecommendQueryServiceImpl implements RecommendQueryService {
 
 			// 사용자가 선택한 알레르기, 식습관 정보와 저장된 시각 데이터
 			MyPageResponseDto.MyPageRecommendResponseDto resultDto = MyPageResponseDto.MyPageRecommendResponseDto.builder()
+				.member_recommend_id(memberFoodRecommend.getId())
 				.allergen_list(Arrays.stream(memberFoodRecommend.getRecommendAllergen().split("#")).toList())
 				.preference_list(Arrays.stream(memberFoodRecommend.getRecommendPreference().split("#")).toList())
 				.date(LocalDateTimeFormatter.formatLocalDateTime(memberFoodRecommend.getCreatedAt()))

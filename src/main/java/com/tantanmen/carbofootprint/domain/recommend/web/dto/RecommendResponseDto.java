@@ -43,6 +43,8 @@ public class RecommendResponseDto {
 		private Integer carbohydrate;
 		@Schema(description = "당류", example = "0")
 		private Integer saccharide;
+		@Schema(description = "카테고리 분류", example = "아재 입맛")
+		private List<String> category_list;
 	}
 
 }

@@ -94,7 +94,7 @@ public class RecommendRestController {
 		}
 
 		RecommendResponseDto.RecommendFoodResponseDto result = RecommendConverter.toRecommendFoodResponseDto(
-			recommendFoodListRecommend, request.getAllergen_list(), request.getPreference_list(), memberFoodRecommend.getId());
+			recommendFoodListRecommend, request.getAllergen_list(), request.getPreference_list(), memberFoodRecommend == null ? null : memberFoodRecommend.getId());
 
 
 		return ApiResponse.onSuccess(result);

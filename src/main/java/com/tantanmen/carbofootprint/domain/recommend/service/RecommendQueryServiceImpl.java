@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tantanmen.carbofootprint.domain.member.entity.Member;
 import com.tantanmen.carbofootprint.domain.mypage.web.dto.MyPageResponseDto;
+import com.tantanmen.carbofootprint.domain.recommend.converter.RecommendConverter;
 import com.tantanmen.carbofootprint.domain.recommend.entity.Allergen;
 import com.tantanmen.carbofootprint.domain.recommend.entity.FoodRecommend;
 import com.tantanmen.carbofootprint.domain.recommend.entity.Preference;
@@ -96,6 +97,7 @@ public class RecommendQueryServiceImpl implements RecommendQueryService {
 					.calorie(foodRecommend.getCalorie())
 					.carbohydrate(foodRecommend.getCarbohydrate())
 					.saccharide(foodRecommend.getSaccharide())
+					.category_list(RecommendConverter.getCategoryList(foodRecommend))
 					.build();
 
 				foodDetailDtos.add(detailDto);

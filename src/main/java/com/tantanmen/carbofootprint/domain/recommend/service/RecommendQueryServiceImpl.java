@@ -2,6 +2,7 @@ package com.tantanmen.carbofootprint.domain.recommend.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -74,8 +75,12 @@ public class RecommendQueryServiceImpl implements RecommendQueryService {
 		else{
 			preferenceNameList = request.getPreference_list().stream().map(Enum::name).collect(Collectors.toList());
 		}
+		List<FoodRecommend> foodRecommendList = foodRecommendRepository.findRecommendedFoods(allergenNameList,
+			preferenceNameList);
 
-		return foodRecommendRepository.findRecommendedFoods(allergenNameList, preferenceNameList);
+		// 랜덤하게 3개의 값만 추출
+		Collections.shuffle(foodRecommendList);
+		return foodRecommendList.stream().limit(3).collect(Collectors.toList());
 	}
 
 	/**

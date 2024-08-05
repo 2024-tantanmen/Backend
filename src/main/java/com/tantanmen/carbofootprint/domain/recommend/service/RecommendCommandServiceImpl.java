@@ -14,6 +14,7 @@ import com.tantanmen.carbofootprint.domain.recommend.entity.mapping.FoodRecommen
 import com.tantanmen.carbofootprint.domain.recommend.entity.mapping.MemberFoodRecommend;
 import com.tantanmen.carbofootprint.domain.recommend.enums.AllergenType;
 import com.tantanmen.carbofootprint.domain.recommend.enums.PreferenceType;
+import com.tantanmen.carbofootprint.domain.recommend.repository.MemberFoodRecommendRepository;
 import com.tantanmen.carbofootprint.domain.recommend.web.dto.RecommendRequestDto;
 
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 @RequiredArgsConstructor
 public class RecommendCommandServiceImpl implements RecommendCommandService{
+	private final MemberFoodRecommendRepository memberFoodRecommendRepository;
 	/**
 	 * 결과 데이터를 저장
 	 */
@@ -43,8 +45,11 @@ public class RecommendCommandServiceImpl implements RecommendCommandService{
 			foodRecommend.addFoodRecommendResult(foodRecommendResult);
 			memberFoodRecommend.addFoodRecommendResult(foodRecommendResult);
 		}
+		if(member != null) {
+			member.addMemberFoodRecommend(memberFoodRecommend);
+		}
 
-		member.addMemberFoodRecommend(memberFoodRecommend);
+		memberFoodRecommendRepository.save(memberFoodRecommend);
 
 		return memberFoodRecommend;
 	}

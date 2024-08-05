@@ -87,11 +87,9 @@ public class RecommendRestController {
 
 		MemberFoodRecommend memberFoodRecommend = null;
 
-		// 만약 사용자가 로그인 한 상태라면, 결과 데이터 저장
-		if(member != null){
-			memberFoodRecommend = recommendCommandService.saveResultData(member,
-				recommendFoodListRecommend, request);
-		}
+		// 결과 데이터 저장
+		memberFoodRecommend = recommendCommandService.saveResultData(member,
+			recommendFoodListRecommend, request);
 
 		RecommendResponseDto.RecommendFoodResponseDto result = RecommendConverter.toRecommendFoodResponseDto(
 			recommendFoodListRecommend, request.getAllergen_list(), request.getPreference_list(), memberFoodRecommend == null ? null : memberFoodRecommend.getId());

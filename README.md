@@ -1,7 +1,7 @@
 # **탄수 발자국**
 
 <br/>
-<div align="center"> <img src ="https://carbofootprint-bucket.s3.ap-northeast-2.amazonaws.com/docs/tantanmen_main.png" alt="탄탄멘" width="40%"></div>
+<div align="center"> <img src ="./docs/tantanmen_main.png" alt="탄탄멘" width="40%"></div>
 <div align="center">학습 모델을 활용한 푸드렌즈와 AI 챗봇 기반 솔루션<br></vr><b>탄수 발자국</b></div>
 <br/>
 
@@ -15,7 +15,7 @@
 
 ### **- 팀원 소개**
 <br>
-<div align="center"> <img src ="https://carbofootprint-bucket.s3.ap-northeast-2.amazonaws.com/docs/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2024-08-06+21.22.48.png" alt="늘보미" width="40%"></div>
+<div align="center"> <img src ="./docs/logo.png" alt="탄탄맨 메인" width="40%"></div>
 <br>
 
 | 이름  | 역할        | 담당                                                     |
@@ -110,7 +110,7 @@
 ### **3️⃣ 기술 스택**
 
 <br>
-<img src ="https://carbofootprint-bucket.s3.ap-northeast-2.amazonaws.com/docs/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2024-08-06+22.30.50.png" alt="아키텍쳐" width="60%">
+<img src ="./docs/system_flow.png" alt="시스템 흐름도" width="60%">
 <br>
 
 - `FrontEnd` :<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white"> ![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)<br>
@@ -127,7 +127,7 @@
 ### **5️⃣ 프로젝트 산출물**
 
 ## **1. ERD**
-<img src="https://carbofootprint-bucket.s3.ap-northeast-2.amazonaws.com/docs/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2024-08-06+22.04.26.png">
+<img src="./docs/erd.png">
 
 ## **2. 와이어 프레임 및 디자인**
 [Figma 링크](https://www.figma.com/design/xn9MIcS0nSTCpHXPZziJaO/2024%EC%A4%91%EC%95%99%ED%86%A4_%ED%83%84%ED%83%84%EB%A9%98?node-id=290-13748&t=pk4R78GHkYkSxT8R-1)
@@ -135,5 +135,5 @@
 
 ## **3. 발표 자료**
 
-  [발표 PPT](https://carbofootprint-bucket.s3.ap-northeast-2.amazonaws.com/docs/%E1%84%90%E1%85%A1%E1%86%AB%E1%84%89%E1%85%AE+%E1%84%87%E1%85%A1%E1%86%AF%E1%84%8C%E1%85%A1%E1%84%80%E1%85%AE%E1%86%A8_PPT_%E1%84%80%E1%85%A9%E1%86%BC%E1%84%8B%E1%85%B2%E1%84%8B%E1%85%AD%E1%86%BC.pdf)
+  [발표 PPT](https://github.com/2024-tantanmen/Backend/blob/main/docs/%E1%84%90%E1%85%A1%E1%86%AB%E1%84%89%E1%85%AE%20%E1%84%87%E1%85%A1%E1%86%AF%E1%84%8C%E1%85%A1%E1%84%80%E1%85%AE%E1%86%A8_PPT_%E1%84%80%E1%85%A9%E1%86%BC%E1%84%8B%E1%85%B2%E1%84%8B%E1%85%AD%E1%86%BC.pdf)
 
